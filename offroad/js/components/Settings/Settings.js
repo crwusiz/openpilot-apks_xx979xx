@@ -420,7 +420,7 @@ class Settings extends Component {
                         <X.Table>
                             <X.TableCell
                                 title='장치 페어링 상태'
-                                value={ isPaired ? '연결됨' : '연결안됨' } />
+                                value={ isPaired ? '페어링됨' : '페어링안됨' } />
                             { isPaired ? (
                                 <X.Text
                                     color='white'
@@ -441,7 +441,7 @@ class Settings extends Component {
                                     color='settingsDefault'
                                     size='small'
                                     onPress={ this.props.openPairing }>
-                                    장치 페어링설정 
+                                    페어링설정
                                 </X.Button>
                             </X.Table>
                         ) }
@@ -540,7 +540,7 @@ class Settings extends Component {
                                 isDisabled={ !isOffroad }
                                 onPress={ this.props.setIsDriverViewEnabled  }
                                 style={ { minWidth: '100%' } }>
-                                Preview
+                                미리보기
                             </X.Button>
                         </X.TableCell>
                     </X.Table>
