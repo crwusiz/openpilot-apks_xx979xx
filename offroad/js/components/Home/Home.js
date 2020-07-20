@@ -265,7 +265,7 @@ class Home extends Component {
                                     color='lightGrey700'
                                     size='medium'
                                     style={ Styles.homeBodyDisconnectedContext }>
-                                    네트워크에 연결하여 {'\n'} 주행영상 업로드 및 다시보기
+                                    네트워크에 연결하여 주행영상 업로드 및 다시보기 {'\n'} {'\n'} Easy Driving !!{'\n'}한글화 by crwusiz
                                 </X.Text>
                             </View>
                         </View>
