@@ -56,7 +56,7 @@ class SetupPair extends Component {
                             color='white'
                             size='big'
                             weight='bold'>
-                            Pair Your Account
+                            장치와 계정을 페어링하세요
                         </X.Text>
                     </View>
                     <View style={ Styles.setupPairingBody }>
@@ -97,7 +97,7 @@ class SetupPair extends Component {
                                 <X.Text>
                                     <X.Text
                                         color='white'>
-                                        { isPaired ? 'Successfully paired to an account in ' : 'Download ' }
+                                        { isPaired ? '의 계정에 성공적으로 페어링됨 ' : '다운로드 ' }
                                     </X.Text>
                                     <X.Text
                                         color='white'
@@ -107,7 +107,7 @@ class SetupPair extends Component {
                                     { isPaired ? null : (
                                       <X.Text
                                           color='white'>
-                                          { 'and scan this code to pair.' }
+                                          {'\n'}{ '코드를 스캔해서 페어링을 시도하세요' }
                                       </X.Text>
                                     ) }
                                 </X.Text>
@@ -133,14 +133,14 @@ class SetupPair extends Component {
                                         color='setupPrimary'
                                         onPress={ this.props.handleSetupComplete }
                                         style={ Styles.setupPairingButtonsContinue }>
-                                        Continue
+                                        계속하기
                                     </X.Button>
                                 ) : (
                                     <X.Button
                                         color='setupInverted'
                                         onPress={ this.props.handleSetupComplete }
                                         style={ Styles.setupPairingButtonsContinue }>
-                                        Skip for Now
+                                        지금은 건너뛰기
                                     </X.Button>
                                 ) }
                             </View>
