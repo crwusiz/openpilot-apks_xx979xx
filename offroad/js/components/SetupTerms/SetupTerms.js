@@ -36,13 +36,13 @@ class SetupTerms extends Component {
                     </View>
                     <ScrollThrough
                         onPrimaryButtonClick={ onAccept }
-                        primaryButtonText='Accept Terms and Conditions'
+                        primaryButtonText='약관 수락'
                         primaryButtonTextDisabled='Read to Continue'
                         secondaryButtonText='Decline'
                         scrollViewStyles={ Styles.setupTermsScrollView }>
                         <X.Text weight='semibold' color='white'>Comma.ai, Inc. Terms & Conditions</X.Text>
                         <X.Text size='small' color='white' style={ Styles.tosText }>{ Documents.TOS }</X.Text>
-                        <X.Text size='small' color='white'>Privacy policy available at https://my.comma.ai/privacy.html</X.Text>
+                        <X.Text size='small' color='white'>개인 정보 보호 정책 https://my.comma.ai/privacy.html</X.Text>
                     </ScrollThrough>
                 </X.Entrance>
             </X.Gradient>
