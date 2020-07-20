@@ -194,7 +194,7 @@ class Home extends Component {
                                             color='darkBlue'
                                             size='tiny'
                                             weight='semibold'>
-                                            Update Available
+                                            업데이트 사용가능
                                         </X.Text>
                                     </X.Button>
                                 </View>
@@ -209,7 +209,7 @@ class Home extends Component {
                                             color='white'
                                             size='tiny'
                                             weight='semibold'>
-                                            { alerts.length } { alerts.length > 1 ? 'ALERTS' : 'ALERT' }
+                                            { alerts.length } { alerts.length > 1 ? '경고' : '경고' }
                                         </X.Text>
                                     </X.Button>
                                 </View>
@@ -247,7 +247,7 @@ class Home extends Component {
                                         size='tiny'
                                         onPress={ this.handleHideAlertsPressed }
                                         style={ Styles.homeBodyAlertAction }>
-                                        Hide Alerts
+                                        경고 숨김
                                     </X.Button>
                                 </View>
                             </ScrollView>
@@ -259,13 +259,13 @@ class Home extends Component {
                                     color='white'
                                     size='jumbo'
                                     weight='semibold'>
-                                    No Network Connection
+                                    네트워크 연결되지않음
                                 </X.Text>
                                 <X.Text
                                     color='lightGrey700'
                                     size='medium'
                                     style={ Styles.homeBodyDisconnectedContext }>
-                                    Connect to a WiFi or cellular network to upload and review your drives.
+                                    네트워크에 연결하여 {'\n'} 주행영상 업로드 및 다시보기
                                 </X.Text>
                             </View>
                         </View>
@@ -277,7 +277,7 @@ class Home extends Component {
                                       color='white'
                                       size='tiny'
                                       weight='semibold'>
-                                      PAST WEEK
+                                      지난주
                                   </X.Text>
                               </View>
                               <View style={ Styles.homeBodyStatsRow }>
@@ -293,7 +293,7 @@ class Home extends Component {
                                           color='lightGrey700'
                                           size='tiny'
                                           style={ Styles.homeBodyStatLabel }>
-                                          DRIVES
+                                          주행수
                                       </X.Text>
                                   </View>
                                   <View style={ Styles.homeBodyStat }>
@@ -325,7 +325,7 @@ class Home extends Component {
                                           color='lightGrey700'
                                           size='tiny'
                                           style={ Styles.homeBodyStatLabel }>
-                                          HOURS
+                                          시간
                                       </X.Text>
                                   </View>
                               </View>
@@ -337,7 +337,7 @@ class Home extends Component {
                                       color='white'
                                       size='tiny'
                                       weight='semibold'>
-                                      ALL TIME
+                                      전체 시간
                                   </X.Text>
                               </View>
                               <View style={ Styles.homeBodyStatsRow }>
@@ -353,7 +353,7 @@ class Home extends Component {
                                           color='lightGrey700'
                                           size='tiny'
                                           style={ Styles.homeBodyStatLabel }>
-                                          DRIVES
+                                          주행수
                                       </X.Text>
                                   </View>
                                   <View style={ Styles.homeBodyStat }>
@@ -385,7 +385,7 @@ class Home extends Component {
                                           color='lightGrey700'
                                           size='tiny'
                                           style={ Styles.homeBodyStatLabel }>
-                                          HOURS
+                                          시간
                                       </X.Text>
                                   </View>
                               </View>
@@ -406,7 +406,7 @@ class Home extends Component {
                                           color='lightGrey700'
                                           size='tiny'
                                           style={ Styles.homeBodyAccountPointsLabel }>
-                                          COMMA POINTS
+                                          COMMA 포인트
                                       </X.Text>
                                   </View>
                                   <View style={ Styles.homeBodyAccountDetails }>
@@ -429,14 +429,14 @@ class Home extends Component {
                                           size='medium'
                                           weight='semibold'
                                           style={ Styles.homeBodyAccountUpgradeTitle }>
-                                          Upgrade Now
+                                          지금 업데이트
                                       </X.Text>
                                       <X.Text
                                           color='white'
                                           size='tiny'
                                           weight='light'
                                           style={ Styles.homeBodyAccountUpgradeContext }>
-                                          Become a comma prime member in the comma app and get premium features!
+                                          comma prime 맴버가 되어 comma connect앱에서 고급 기능을 추가하세요!
                                       </X.Text>
                                       <View style={ Styles.homeBodyAccountUpgradeFeatures }>
                                           <View style={ Styles.homeBodyAccountUpgradeFeature }>
@@ -448,7 +448,7 @@ class Home extends Component {
                                                   color='white'
                                                   size='tiny'
                                                   weight='semibold'>
-                                                  Remote Access
+                                                  원격 접속
                                               </X.Text>
                                           </View>
                                           <View style={ Styles.homeBodyAccountUpgradeFeature }>
@@ -460,7 +460,7 @@ class Home extends Component {
                                                   color='white'
                                                   size='tiny'
                                                   weight='semibold'>
-                                                  1 year of storage
+                                                  저장기간 : 1 년
                                               </X.Text>
                                           </View>
                                           <View style={ Styles.homeBodyAccountUpgradeFeature }>
@@ -472,7 +472,7 @@ class Home extends Component {
                                                   color='white'
                                                   size='tiny'
                                                   weight='semibold'>
-                                                  Developer perks
+                                                  개발자 혜택
                                               </X.Text>
                                           </View>
                                       </View>
@@ -492,7 +492,7 @@ class Home extends Component {
                                                   color='white'
                                                   size='medium'
                                                   weight='semibold'>
-                                                  Finish Setup
+                                                  설치 완료
                                               </X.Text>
                                               <X.Image
                                                   isFlex={ false }
@@ -504,7 +504,7 @@ class Home extends Component {
                                               size='tiny'
                                               weight='light'
                                               style={ Styles.homeBodyAccountPairButtonContext }>
-                                              Pair your comma account with comma connect
+                                              comma connect앱으로 {'\n'}페어링하세요
                                           </X.Text>
                                       </X.Gradient>
                                   </X.Button>
