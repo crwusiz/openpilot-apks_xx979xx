@@ -646,7 +646,7 @@ class Settings extends Component {
                 CommunityFeaturesToggle: communityFeatures,
                 LaneChangeEnabled: laneChangeEnabled,
                 LongControlEnabled: longControlEnabled,
-                RadarDisableEnable: RadarDisableEnable,
+                RadarDisableEnable: radarDisableEnable,
             },
         } = this.props;
         const { expandedCell } = this.state;
