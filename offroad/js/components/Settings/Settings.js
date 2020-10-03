@@ -1008,7 +1008,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(updateParam(Params.KEY_LONG_CONTROL_ENABLED, (longControlEnabled | 0).toString()));
     },
     setRadarDisableEnabled: (radarDisableEnabled) => {
-        dispatch(updateParam(Params.KEY_RADAR_DISABLE_ENABLED, (RadarDisableEnabled | 0).toString()));
+        dispatch(updateParam(Params.KEY_RADAR_DISABLE_ENABLED, (radarDisableEnabled | 0).toString()));
     },    
     deleteParam: (param) => {
         dispatch(deleteParam(param));
