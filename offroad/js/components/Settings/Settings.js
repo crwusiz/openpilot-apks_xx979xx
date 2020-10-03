@@ -1023,6 +1023,9 @@ const mapDispatchToProps = dispatch => ({
     },
     setRadarDisableEnabled: (radarDisableEnabled) => {
         dispatch(updateParam(Params.KEY_RADAR_DISABLE_ENABLED, (radarDisableEnabled | 0).toString()));
+    },
+    setMdpsHarnessEnabled: (mdpsHarnessEnabled) => {
+        dispatch(updateParam(Params.KEY_MDPS_HARNESS_ENABLED, (mdpsHarnessEnabled | 0).toString()));
     },    
     deleteParam: (param) => {
         dispatch(deleteParam(param));
