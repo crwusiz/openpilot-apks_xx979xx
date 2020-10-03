@@ -40,6 +40,4 @@ export const Params = {
     KEY_IS_RHD: 'IsRHD',
     KEY_IS_OFFROAD: 'IsOffroad',
     KEY_LONG_CONTROL_ENABLED: 'LongControlEnabled',
-    KEY_MAD_MODE_ENABLED: 'MadModeEnabled',
-    KEY_AUTO_LANE_CHANGE_ENABLED: 'AutoLaneChangeEnabled',
 };
