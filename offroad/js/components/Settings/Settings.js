@@ -159,8 +159,8 @@ class Settings extends Component {
     handlePressedUpdateMdps = async () => {
         Alert.alert('MDPS 펌웨어', 'MDPS 배선개조용으로 Panda 펌웨어를 변경합니다', [
             { text: '취소', onPress: () => {}, style: 'cancel' },
-            { text: 'can2방식', onPress: () => ChffrPlus.updatePandaCan2() },
-            { text: 'can3방식', onPress: () => ChffrPlus.updatePandaCan3() },
+            { text: 'can2방식', onPress: () => ChffrPlus.updateMdpsCan2() },
+            { text: 'can3방식', onPress: () => ChffrPlus.updateMdpsCan3() },
         ]);
     }    
     // handleChangedSpeedLimitOffset(operator) {
