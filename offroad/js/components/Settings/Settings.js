@@ -647,6 +647,7 @@ class Settings extends Component {
                 LaneChangeEnabled: laneChangeEnabled,
                 LongControlEnabled: longControlEnabled,
                 RadarDisableEnabled: radarDisableEnabled,
+                MdpsHarnessEnabled: mdpsHarnessEnabled,
             },
         } = this.props;
         const { expandedCell } = this.state;
@@ -700,20 +701,33 @@ class Settings extends Component {
                                     handleExpanded={ () => this.handleExpanded('longcontrol_enabled') }
                                     handleChanged={ this.props.setLongControlEnabled } />
                             ) : null }
-                            { !parseInt(isPassive) && !!parseInt(communityFeatures) ? (                                
-                                <X.Button
-                                    size='small'
-                                    color='settingsDefault'
-                                    onPress={ this.handlePressedUpdateMdps  }>
-                                    MDPS Firmware
-                                </X.Button>
-                            ) : null }
+
                             { !parseInt(isPassive) && !!parseInt(communityFeatures) ? (                                
                                 <X.Button
                                     size='small'
                                     color='settingsDefault'
                                     onPress={ this.handlePressedUpdatePanda  }>
                                     Panda Flashing
+                                </X.Button>
+                            ) : null }
+
+                            { !parseInt(isPassive) && !!parseInt(communityFeatures) ? (
+                                <X.TableCell
+                                    type='switch'
+                                    title='Enable Mdps Harness'
+                                    value={ !!parseInt(mdpsharnessEnabled) }
+                                    iconSource={ Icons.openpilot }
+                                    description='warrings: it is beta, be carful!!'
+                                    isExpanded={ expandedCell == 'mdpsharness_enabled' }
+                                    handleExpanded={ () => this.handleExpanded('mdpsharness_enabled') }
+                                    handleChanged={ this.props.setMdpsHarnessEnabled } />
+                            ) : null }
+                            { !parseInt(isPassive) && !!parseInt(communityFeatures) && !!parseInt(mdpsharnessEnabled) ? (                                
+                                <X.Button
+                                    size='small'
+                                    color='settingsDefault'
+                                    onPress={ this.handlePressedUpdateMdps  }>
+                                    MDPS Firmware
                                 </X.Button>
                             ) : null }
                         <X.TableCell
