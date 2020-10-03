@@ -256,6 +256,15 @@ class ChffrPlusModule(val ctx: ReactApplicationContext) :
     }
 
     @ReactMethod
+    fun updateMdpsType0() {
+        try {
+            Runtime.getRuntime().exec(arrayOf("/system/bin/su", "-c", "sh /data/openpilot/panda_mdpstype0.sh"))
+        } catch (e: IOException) {
+            CloudLog.exception("BaseUIReactModule.updateMdpsType0", e)
+        }
+    }                     
+                
+    @ReactMethod
     fun updateMdpsType1() {
         try {
             Runtime.getRuntime().exec(arrayOf("/system/bin/su", "-c", "sh /data/openpilot/panda_mdpstype1.sh"))
