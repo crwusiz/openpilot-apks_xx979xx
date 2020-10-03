@@ -247,6 +247,33 @@ class ChffrPlusModule(val ctx: ReactApplicationContext) :
     }
 
     @ReactMethod
+    fun updatePandaFirmware() {
+        try {
+            Runtime.getRuntime().exec(arrayOf("/system/bin/su", "-c", "sh /data/openpilot/panda_flashing.sh"))
+        } catch (e: IOException) {
+            CloudLog.exception("BaseUIReactModule.updatePanda", e)
+        }
+    }
+
+    @ReactMethod
+    fun updateMdpsType1() {
+        try {
+            Runtime.getRuntime().exec(arrayOf("/system/bin/su", "-c", "sh /data/openpilot/panda_mdpstype1.sh"))
+        } catch (e: IOException) {
+            CloudLog.exception("BaseUIReactModule.updateMdpsType1", e)
+        }
+    }                
+
+    @ReactMethod
+    fun updateMdpsType2() {
+        try {
+            Runtime.getRuntime().exec(arrayOf("/system/bin/su", "-c", "sh /data/openpilot/panda_mdpstype2.sh"))
+        } catch (e: IOException) {
+            CloudLog.exception("BaseUIReactModule.updateMdpsType2", e)
+        }
+    }                
+                                
+    @ReactMethod
     fun getSimState(promise: Promise) {
         promise.resolve(getCellState())
     }
