@@ -41,6 +41,7 @@ export const Params = {
     KEY_IS_OFFROAD: 'IsOffroad',
     KEY_LONG_CONTROL_ENABLED: 'LongControlEnabled',
     KEY_RADAR_DISABLE_ENABLED: 'RadarDisableEnabled',
-    KEY_MDPS_HARNESS_ENABLED: 'MdpsHarnessEnabled',    
+    KEY_MDPS_HARNESS_ENABLED: 'MdpsHarnessEnabled',
+    KEY_SCC_ENABLED: 'SccEnabled',    
 };
 
