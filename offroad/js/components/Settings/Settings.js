@@ -1,13 +1,5 @@
 import React, { Component } from 'react';
-import {
-    ActivityIndicator,
-    Alert,
-    ScrollView,
-    TextInput,
-    View,
-    ToastAndroid,
-    Platform,    
-} from 'react-native';
+import { ActivityIndicator, Alert, ScrollView, TextInput, View } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 
@@ -164,6 +156,13 @@ class Settings extends Component {
         ]);
     }
     
+    handlePressedUpdateMdps = async () => {
+        Alert.alert('MDPS 펌웨어', 'MDPS 배선개조용으로 Panda 펌웨어를 변경합니다', [
+            { text: '취소', onPress: () => {}, style: 'cancel' },
+            { text: 'can2방식', onPress: () => ChffrPlus.updatePandaCan2() },
+            { text: 'can3방식', onPress: () => ChffrPlus.updatePandaCan3() },
+        ]);
+    }    
     // handleChangedSpeedLimitOffset(operator) {
     //     const { speedLimitOffset, isMetric } = this.props;
     //     let _speedLimitOffset;
@@ -711,6 +710,14 @@ class Settings extends Component {
                                     handleExpanded={ () => this.handleExpanded('longcontrol_enabled') }
                                     handleChanged={ this.props.setLongControlEnabled } />
                             ) : null }
+                            { !parseInt(isPassive) && !!parseInt(communityFeatures) ? (                                
+                                <X.Button
+                                    size='small'
+                                    color='settingsDefault'
+                                    onPress={ this.handlePressedUpdateMdps  }>
+                                    MDPS 펌웨어
+                                </X.Button>
+                            ) : null }                                
                     </X.Table>
                                
                         {/*
