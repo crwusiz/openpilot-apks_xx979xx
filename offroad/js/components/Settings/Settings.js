@@ -715,14 +715,14 @@ class Settings extends Component {
                                 <X.TableCell
                                     type='switch'
                                     title='Enable Mdps Harness'
-                                    value={ !!parseInt(mdpsharnessEnabled) }
+                                    value={ !!parseInt(mdpsHarnessEnabled) }
                                     iconSource={ Icons.openpilot }
                                     description='warrings: it is beta, be carful!!'
-                                    isExpanded={ expandedCell == 'mdpsharness_enabled' }
-                                    handleExpanded={ () => this.handleExpanded('mdpsharness_enabled') }
+                                    isExpanded={ expandedCell == 'mdpsHarness_enabled' }
+                                    handleExpanded={ () => this.handleExpanded('mdpsHarness_enabled') }
                                     handleChanged={ this.props.setMdpsHarnessEnabled } />
                             ) : null }
-                            { !parseInt(isPassive) && !!parseInt(communityFeatures) && !!parseInt(mdpsharnessEnabled) ? (                                
+                            { !parseInt(isPassive) && !!parseInt(communityFeatures) && !!parseInt(mdpsHarnessEnabled) ? (                                
                                 <X.Button
                                     size='small'
                                     color='settingsDefault'
