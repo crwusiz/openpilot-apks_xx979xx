@@ -632,8 +632,6 @@ class Settings extends Component {
                 CommunityFeaturesToggle: communityFeatures,
                 LaneChangeEnabled: laneChangeEnabled,
                 LongControlEnabled: longControlEnabled,
-                MadModeEnabled: madModeEnabled,
-                AutoLaneChangeEnabled: autoLaneChangeEnabled,
             },
         } = this.props;
         const { expandedCell } = this.state;
@@ -988,15 +986,6 @@ const mapDispatchToProps = dispatch => ({
     },
     setLongControlEnabled: (longControlEnabled) => {
         dispatch(updateParam(Params.KEY_LONG_CONTROL_ENABLED, (longControlEnabled | 0).toString()));
-        if (longControlEnabled == 1) {
-          dispatch(updateParam(Params.KEY_MAD_MODE_ENABLED, (0).toString()));
-        }
-    },
-    setMadModeEnabled: (madModeEnabled) => {
-        dispatch(updateParam(Params.KEY_MAD_MODE_ENABLED, (madModeEnabled | 0).toString()));
-    },
-    setAutoLaneChangeEnabled: (autoLaneChangeEnabled) => {
-        dispatch(updateParam(Params.KEY_AUTO_LANE_CHANGE_ENABLED, (autoLaneChangeEnabled | 0).toString()));
     },
     deleteParam: (param) => {
         dispatch(deleteParam(param));
