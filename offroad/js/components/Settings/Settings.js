@@ -128,7 +128,21 @@ class Settings extends Component {
         this.props.deleteParam(Params.KEY_CALIBRATION_PARAMS);
         this.props.deleteParam(Params.KEY_LIVE_PARAMETERS);
     }
-
+    
+    handlePressedUpdatePanda = async () => {
+        Alert.alert('Panda Flashing', 'Panda Flashing and Reboot', [
+            { text: 'Cancel', onPress: () => {}, style: 'cancel' },
+            { text: 'Run', onPress: () => ChffrPlus.updatePandaFirmware() },
+        ]);
+    }
+    
+    handlePressedUpdateMdps = async () => {
+        Alert.alert('MDPS Firmware', 'use MDPS fix Panda Firmware and Reboot. type1(can1) , type2(comma power)', [
+            { text: 'Cancel', onPress: () => {}, style: 'cancel' },
+            { text: 'Type1', onPress: () => ChffrPlus.updateMdpsType1() },
+            { text: 'Type2', onPress: () => ChffrPlus.updateMdpsType2() },
+        ]);
+    }    
     // handleChangedSpeedLimitOffset(operator) {
     //     const { speedLimitOffset, isMetric } = this.props;
     //     let _speedLimitOffset;
@@ -685,6 +699,22 @@ class Settings extends Component {
                                     isExpanded={ expandedCell == 'longcontrol_enabled' }
                                     handleExpanded={ () => this.handleExpanded('longcontrol_enabled') }
                                     handleChanged={ this.props.setLongControlEnabled } />
+                            ) : null }
+                            { !parseInt(isPassive) && !!parseInt(communityFeatures) ? (                                
+                                <X.Button
+                                    size='small'
+                                    color='settingsDefault'
+                                    onPress={ this.handlePressedUpdateMdps  }>
+                                    MDPS Firmware
+                                </X.Button>
+                            ) : null }
+                            { !parseInt(isPassive) && !!parseInt(communityFeatures) ? (                                
+                                <X.Button
+                                    size='small'
+                                    color='settingsDefault'
+                                    onPress={ this.handlePressedUpdatePanda  }>
+                                    Panda Flashing
+                                </X.Button>
                             ) : null }
                         <X.TableCell
                             type='switch'
