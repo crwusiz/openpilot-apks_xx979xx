@@ -701,16 +701,6 @@ class Settings extends Component {
                                     handleExpanded={ () => this.handleExpanded('longcontrol_enabled') }
                                     handleChanged={ this.props.setLongControlEnabled } />
                             ) : null }
-
-                            { !parseInt(isPassive) && !!parseInt(communityFeatures) ? (                                
-                                <X.Button
-                                    size='small'
-                                    color='settingsDefault'
-                                    onPress={ this.handlePressedUpdatePanda  }>
-                                    Panda Flashing
-                                </X.Button>
-                            ) : null }
-
                             { !parseInt(isPassive) && !!parseInt(communityFeatures) ? (
                                 <X.TableCell
                                     type='switch'
@@ -774,6 +764,12 @@ class Settings extends Component {
                             title='Panda Dongle ID'
                             value={ (pandaDongleId != null && pandaDongleId != "unprovisioned") ? pandaDongleId : 'N/A' }
                             valueTextSize='tiny' />
+                        <X.Button
+                            size='small'
+                            color='settingsDefault'
+                            onPress={ this.handlePressedUpdatePanda  }>
+                            Panda Flashing
+                        </X.Button>
                     </X.Table>
                     <X.Table color='darkBlue' padding='big'>
                         <X.Button
