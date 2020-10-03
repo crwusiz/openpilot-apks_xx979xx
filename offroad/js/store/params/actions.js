@@ -45,6 +45,7 @@ const PARAMS = [
   "IsLdwEnabled",
   "LaneChangeEnabled",
   "LongControlEnabled",
+  "RadarDisableEnable",
   "IsRHD"
 ].concat(ALERT_PARAMS);
 
