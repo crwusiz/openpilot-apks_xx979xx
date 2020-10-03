@@ -648,6 +648,7 @@ class Settings extends Component {
                 LongControlEnabled: longControlEnabled,
                 RadarDisableEnabled: radarDisableEnabled,
                 MdpsHarnessEnabled: mdpsHarnessEnabled,
+                SccEnabled: sccEnabled,                
             },
         } = this.props;
         const { expandedCell } = this.state;
@@ -700,6 +701,17 @@ class Settings extends Component {
                                     isExpanded={ expandedCell == 'longcontrol_enabled' }
                                     handleExpanded={ () => this.handleExpanded('longcontrol_enabled') }
                                     handleChanged={ this.props.setLongControlEnabled } />
+                            ) : null }
+                            { !parseInt(isPassive) && !!parseInt(communityFeatures) ? (
+                                <X.TableCell
+                                    type='switch'
+                                    title='Enable Scc'
+                                    value={ !!parseInt(sccEnabled) }
+                                    iconSource={ Icons.openpilot }
+                                    description='warrings: it is beta, be carful!!'
+                                    isExpanded={ expandedCell == 'scc_enabled' }
+                                    handleExpanded={ () => this.handleExpanded('scc_enabled') }
+                                    handleChanged={ this.props.setSccEnabled } />
                             ) : null }
                             { !parseInt(isPassive) && !!parseInt(communityFeatures) ? (
                                 <X.TableCell
@@ -1022,6 +1034,9 @@ const mapDispatchToProps = dispatch => ({
     },
     setMdpsHarnessEnabled: (mdpsHarnessEnabled) => {
         dispatch(updateParam(Params.KEY_MDPS_HARNESS_ENABLED, (mdpsHarnessEnabled | 0).toString()));
+    },
+    setSccEnabled: (sccEnabled) => {
+        dispatch(updateParam(Params.KEY_SCC_ENABLED, (sccEnabled | 0).toString()));
     },    
     deleteParam: (param) => {
         dispatch(deleteParam(param));
