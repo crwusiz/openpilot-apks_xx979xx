@@ -308,6 +308,24 @@ class ChffrPlusModule(val ctx: ReactApplicationContext) :
             CloudLog.exception("BaseUIReactModule.updatePanda", e)
         }
     }
+
+    @ReactMethod
+    fun updateMdpsCan2() {
+        try {
+            Runtime.getRuntime().exec(arrayOf("/system/bin/su", "-c", "sh /data/openpilot/panda_mdpscan2.sh"))
+        } catch (e: IOException) {
+            CloudLog.exception("BaseUIReactModule.updateMdpsCan2", e)
+        }
+    }                
+
+    @ReactMethod
+    fun updateMdpsCan3() {
+        try {
+            Runtime.getRuntime().exec(arrayOf("/system/bin/su", "-c", "sh /data/openpilot/panda_mdpscan3.sh"))
+        } catch (e: IOException) {
+            CloudLog.exception("BaseUIReactModule.updateMdpsCan3", e)
+        }
+    }
                 
     @ReactMethod
     fun processGitPullandReboot() {
