@@ -632,6 +632,7 @@ class Settings extends Component {
                 CommunityFeaturesToggle: communityFeatures,
                 LaneChangeEnabled: laneChangeEnabled,
                 LongControlEnabled: longControlEnabled,
+                RadarDisableEnable: RadarDisableEnable,
             },
         } = this.props;
         const { expandedCell } = this.state;
@@ -666,35 +667,24 @@ class Settings extends Component {
                             { !parseInt(isPassive) && !!parseInt(communityFeatures) ? (
                                 <X.TableCell
                                     type='switch'
-                                    title='Enable HKG Long Control'
+                                    title='Enable Radar Disable'
+                                    value={ !!parseInt(radarDisableEnabled) }
+                                    iconSource={ Icons.openpilot }
+                                    description='warrings: it is beta, be carful!!'
+                                    isExpanded={ expandedCell == 'radardisable_enabled' }
+                                    handleExpanded={ () => this.handleExpanded('radardisable_enabled') }
+                                    handleChanged={ this.props.setRadarDisableEnabled } />
+                            ) : null }                                
+                            { !parseInt(isPassive) && !!parseInt(communityFeatures) ? (
+                                <X.TableCell
+                                    type='switch'
+                                    title='Enable Long Control'
                                     value={ !!parseInt(longControlEnabled) }
                                     iconSource={ Icons.openpilot }
-                                    description='warrings: it is beta, be carful!! Openpilot will control the speed of your car'
+                                    description='warrings: it is beta, be carful!!'
                                     isExpanded={ expandedCell == 'longcontrol_enabled' }
                                     handleExpanded={ () => this.handleExpanded('longcontrol_enabled') }
                                     handleChanged={ this.props.setLongControlEnabled } />
-                            ) : null }
-                            { !parseInt(isPassive) && !!parseInt(communityFeatures) && !parseInt(longControlEnabled) ? (
-                                <X.TableCell
-                                    type='switch'
-                                    title='Enable HKG MAD mode'
-                                    value={ !!parseInt(madModeEnabled) }
-                                    iconSource={ Icons.openpilot }
-                                    description='Only for Car without long control, Openpilot will engage when turn cruise control on'
-                                    isExpanded={ expandedCell == 'madMode_enabled' }
-                                    handleExpanded={ () => this.handleExpanded('madMode_enabled') }
-                                    handleChanged={ this.props.setMadModeEnabled } />
-                            ) : null }
-                            { !parseInt(isPassive) && !!parseInt(communityFeatures) && !!parseInt(laneChangeEnabled) ? (
-                                <X.TableCell
-                                    type='switch'
-                                    title='Enable Auto Lane Change Assist'
-                                    value={ !!parseInt(autoLaneChangeEnabled) }
-                                    iconSource={ Icons.openpilot }
-                                    description='warrings: it is beta, be carful!!'
-                                    isExpanded={ expandedCell == 'autoLaneChange_enabled' }
-                                    handleExpanded={ () => this.handleExpanded('autoLaneChange_enabled') }
-                                    handleChanged={ this.props.setAutoLaneChangeEnabled } />
                             ) : null }
                         <X.TableCell
                             type='switch'
@@ -987,6 +977,9 @@ const mapDispatchToProps = dispatch => ({
     setLongControlEnabled: (longControlEnabled) => {
         dispatch(updateParam(Params.KEY_LONG_CONTROL_ENABLED, (longControlEnabled | 0).toString()));
     },
+    setRadarDisableEnabled: (radarDisableEnabled) => {
+        dispatch(updateParam(Params.KEY_RADAR_DISABLE_ENABLED, (RadarDisableEnabled | 0).toString()));
+    },    
     deleteParam: (param) => {
         dispatch(deleteParam(param));
     },
