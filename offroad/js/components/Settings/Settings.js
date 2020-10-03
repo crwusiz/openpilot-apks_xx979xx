@@ -659,8 +659,6 @@ class Settings extends Component {
                 CommunityFeaturesToggle: communityFeatures,
                 LaneChangeEnabled: laneChangeEnabled,
                 LongControlEnabled: longControlEnabled,
-                MadModeEnabled: madModeEnabled,
-                AutoLaneChangeEnabled: autoLaneChangeEnabled,
                 IsPrebuiltOn : isPrebuiltOn,
             },
         } = this.props;
@@ -712,28 +710,6 @@ class Settings extends Component {
                                     isExpanded={ expandedCell == 'longcontrol_enabled' }
                                     handleExpanded={ () => this.handleExpanded('longcontrol_enabled') }
                                     handleChanged={ this.props.setLongControlEnabled } />
-                            ) : null }
-                            { !parseInt(isPassive) && !!parseInt(communityFeatures) && !parseInt(longControlEnabled) ? (
-                                <X.TableCell
-                                    type='switch'
-                                    title='MAD 모드 사용'
-                                    value={ !!parseInt(madModeEnabled) }
-                                    iconSource={ Icons.warning }
-                                    description='Long Control 미사용 차량에 한하여 사용가능하며 크루즈버튼으로 오픈파일럿이 활성화됩니다.'
-                                    isExpanded={ expandedCell == 'madMode_enabled' }
-                                    handleExpanded={ () => this.handleExpanded('madMode_enabled') }
-                                    handleChanged={ this.props.setMadModeEnabled } />
-                            ) : null }
-                            { !parseInt(isPassive) && !!parseInt(communityFeatures) && !!parseInt(laneChangeEnabled) ? (
-                                <X.TableCell
-                                    type='switch'
-                                    title='자동차선변경 사용'
-                                    value={ !!parseInt(autoLaneChangeEnabled) }
-                                    iconSource={ Icons.road }
-                                    description='경고 : 이 기능은 베타기능이며 안전을위해 후측방감지기능이 있는 차량만사용하세요.'
-                                    isExpanded={ expandedCell == 'autoLaneChange_enabled' }
-                                    handleExpanded={ () => this.handleExpanded('autoLaneChange_enabled') }
-                                    handleChanged={ this.props.setAutoLaneChangeEnabled } />
                             ) : null }
                     </X.Table>
                                
@@ -1077,15 +1053,6 @@ const mapDispatchToProps = dispatch => ({
     },
     setLongControlEnabled: (longControlEnabled) => {
         dispatch(updateParam(Params.KEY_LONG_CONTROL_ENABLED, (longControlEnabled | 0).toString()));
-        if (longControlEnabled == 1) {
-          dispatch(updateParam(Params.KEY_MAD_MODE_ENABLED, (0).toString()));
-        }
-    },
-    setMadModeEnabled: (madModeEnabled) => {
-        dispatch(updateParam(Params.KEY_MAD_MODE_ENABLED, (madModeEnabled | 0).toString()));
-    },
-    setAutoLaneChangeEnabled: (autoLaneChangeEnabled) => {
-        dispatch(updateParam(Params.KEY_AUTO_LANE_CHANGE_ENABLED, (autoLaneChangeEnabled | 0).toString()));
     },
     deleteParam: (param) => {
         dispatch(deleteParam(param));
