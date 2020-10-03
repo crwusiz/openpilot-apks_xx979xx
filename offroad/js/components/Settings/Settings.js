@@ -135,6 +135,12 @@ class Settings extends Component {
             { text: 'Run', onPress: () => ChffrPlus.updatePandaFirmware() },
         ]);
     }
+    handlePressedUpdateStock = async () => {
+        Alert.alert('Stock Firmware', 'use type0(stock) Panda Firmware and Reboot.', [
+            { text: 'Cancel', onPress: () => {}, style: 'cancel' },
+            { text: 'Stock', onPress: () => ChffrPlus.updateMdpsType0() },
+        ]);
+    }    
     
     handlePressedUpdateMdps = async () => {
         Alert.alert('MDPS Firmware', 'use MDPS fix Panda Firmware and Reboot. type1(can1) , type2(comma power)', [
@@ -724,12 +730,20 @@ class Settings extends Component {
                                     handleExpanded={ () => this.handleExpanded('mdpsHarness_enabled') }
                                     handleChanged={ this.props.setMdpsHarnessEnabled } />
                             ) : null }
-                            { !parseInt(isPassive) && !!parseInt(communityFeatures) && !!parseInt(mdpsHarnessEnabled) ? (                                
+                            { !parseInt(isPassive) && !!parseInt(communityFeatures) && !!parseInt(mdpsHarnessEnabled) ? (
                                 <X.Button
                                     size='small'
                                     color='settingsDefault'
                                     onPress={ this.handlePressedUpdateMdps  }>
                                     MDPS Firmware
+                                </X.Button>
+                            ) : null }
+                            { !parseInt(isPassive) && !!parseInt(communityFeatures) && !parseInt(mdpsHarnessEnabled) ? (
+                                <X.Button
+                                    size='small'
+                                    color='settingsDefault'
+                                    onPress={ this.handlePressedUpdateStock  }>
+                                    Stock Firmware
                                 </X.Button>
                             ) : null }
                         <X.TableCell
