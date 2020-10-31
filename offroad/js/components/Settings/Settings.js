@@ -684,7 +684,7 @@ class Settings extends Component {
                             title='SSH 접속 사용'
                             value={ isSshEnabled }
                             iconSource={ Icons.developer }
-                            description='SSH를 이용한 EON의 접속을 허용합니다.'
+                            description='SSH를 이용한 장치의 접속을 허용합니다.'
                             isExpanded={ expandedCell == 'ssh' }
                             handleExpanded={ () => this.handleExpanded('ssh') }
                             handleChanged={ this.props.setSshEnabled } />
@@ -707,7 +707,7 @@ class Settings extends Component {
                                     title='Long Control 사용'
                                     value={ !!parseInt(longControlEnabled) }
                                     iconSource={ Icons.openpilot }
-                                    description='경고 : 이 기능은 베타기능이며 오픈파일럿이 속도를 컨트롤하기때문에 사용시 주의하세요.'
+                                    description='경고 : 이 기능은 오픈파일럿이 속도를 컨트롤하기때문에 사용시 주의하세요.'
                                     isExpanded={ expandedCell == 'longcontrol_enabled' }
                                     handleExpanded={ () => this.handleExpanded('longcontrol_enabled') }
                                     handleChanged={ this.props.setLongControlEnabled } />
@@ -718,7 +718,7 @@ class Settings extends Component {
                                     title='MAD 모드 사용'
                                     value={ !!parseInt(madModeEnabled) }
                                     iconSource={ Icons.warning }
-                                    description='Long Control 미사용 차량에 한하여 사용가능하며 크루즈버튼으로 오픈파일럿이 활성화됩니다.'
+                                    description='경고 : 이 기능은 크루즈버튼으로 오픈파일럿이 활성화됩니다.'
                                     isExpanded={ expandedCell == 'madMode_enabled' }
                                     handleExpanded={ () => this.handleExpanded('madMode_enabled') }
                                     handleChanged={ this.props.setMadModeEnabled } />
@@ -729,7 +729,7 @@ class Settings extends Component {
                                     title='자동차선변경 사용'
                                     value={ !!parseInt(autoLaneChangeEnabled) }
                                     iconSource={ Icons.road }
-                                    description='경고 : 이 기능은 베타기능이며 안전을위해 후측방감지기능이 있는 차량만사용하세요.'
+                                    description='경고 : 이 기능은 안전을위해 후측방감지기능이 있는 차량만사용하세요.'
                                     isExpanded={ expandedCell == 'autoLaneChange_enabled' }
                                     handleExpanded={ () => this.handleExpanded('autoLaneChange_enabled') }
                                     handleChanged={ this.props.setAutoLaneChangeEnabled } />
