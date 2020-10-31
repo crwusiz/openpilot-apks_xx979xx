@@ -78,8 +78,6 @@ class ChffrPlusModule(val ctx: ReactApplicationContext) :
         thermalPoller!!.stop()
     }
 
-
-
     override fun onThermalDataChanged(thermalSample: ThermalSample) {
         ctx.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
                 .emit("onThermalDataChanged", thermalSample.toWritableMap())
@@ -197,7 +195,7 @@ class ChffrPlusModule(val ctx: ReactApplicationContext) :
         intent.putExtra("extra_prefs_show_button_bar", true)
         startActivityWithIntent(intent, ActivityRequestCode.BLUETOOTH_SETTINGS.code)
     }
-
+ 
     @ReactMethod
     fun openTetheringSettings() {
         val intent = Intent("android.intent.action.MAIN")
@@ -205,6 +203,14 @@ class ChffrPlusModule(val ctx: ReactApplicationContext) :
         intent.putExtra("extra_prefs_show_button_bar", true)
         startActivityWithIntent(intent, ActivityRequestCode.TETHERING_SETTINGS.code)
     }
+                
+    @ReactMethod
+    fun openAndroidSettings() {
+        val intent = Intent("android.intent.action.MAIN")
+        intent.component = ComponentName("com.android.settings", "com.android.settings.Settings")
+        intent.putExtra("extra_prefs_show_button_bar", true)
+        startActivityWithIntent(intent, ActivityRequestCode.ANDROID_SETTINGS.code)
+    }                                
 
     @ReactMethod
     fun openCellularSettings() {
@@ -237,7 +243,6 @@ class ChffrPlusModule(val ctx: ReactApplicationContext) :
             CloudLog.exception("BaseUIReactModule.resetSshKeys", e)
         }
     }
-
 
     @ReactMethod
     fun shutdown() {
