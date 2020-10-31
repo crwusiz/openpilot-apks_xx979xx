@@ -52,7 +52,7 @@ class ChffrPlusModule(val ctx: ReactApplicationContext) :
         BLUETOOTH_SETTINGS(1),
         TETHERING_SETTINGS(2),
         CELLULAR_SETTINGS(3),
-        DATE_SETTINGS(4)
+        DATE_SETTINGS(4),
         ANDROID_SETTINGS(5)            
     }
     private var networkMonitor: NetworkMonitor? = null
