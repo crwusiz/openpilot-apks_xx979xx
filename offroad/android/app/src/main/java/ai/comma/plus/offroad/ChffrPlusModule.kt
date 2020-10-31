@@ -53,6 +53,7 @@ class ChffrPlusModule(val ctx: ReactApplicationContext) :
         TETHERING_SETTINGS(2),
         CELLULAR_SETTINGS(3),
         DATE_SETTINGS(4)
+        ANDROID_SETTINGS(5)            
     }
     private var networkMonitor: NetworkMonitor? = null
     private var thermalPoller: ThermalPoller? = null
