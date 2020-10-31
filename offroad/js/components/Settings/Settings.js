@@ -549,8 +549,6 @@ class Settings extends Component {
                                 리셋
                             </X.Button>
                         </X.TableCell>
-                    </X.Table>
-                    <X.Table color='darkBlue'>
                         <X.TableCell
                             type='custom'
                             title='운전자 모니터링'
@@ -590,12 +588,14 @@ class Settings extends Component {
                         <X.TableCell
                             title='시리얼 번호'
                             value={ serialNumber } />
+                        {/*
                         <X.TableCell
                             title='여유 공간'
                             value={ parseInt(freeSpace) + '%' } />
                         <X.TableCell
                             title='업로드 속도'
                             value={ txSpeedKbps + ' kbps' } />
+                         */}                         
                     </X.Table>
                 </ScrollView>
             </View>
@@ -631,6 +631,13 @@ class Settings extends Component {
                             color='settingsDefault'
                             onPress={ this.props.openTetheringSettings }>
                             테더링 설정
+                        </X.Button>
+                        <X.Line color='transparent' size='tiny' spacing='mini' />
+                        <X.Button
+                            size='small'
+                            color='settingsDefault'                            
+                            onPress={ () => ChffrPlus.openAndroidSettings() }>                                
+                            안드로이드 설정
                         </X.Button>
                     </X.Table>
                 </ScrollView>
@@ -748,7 +755,7 @@ class Settings extends Component {
                     </X.Table>
                         */}
 
-                    <X.Table color='darkBlue' padding='big'>
+                    <X.Table color='darkBlue'>                        
                         <X.TableCell
                             type='custom'
                             title='prebuilt 설정'
@@ -816,7 +823,6 @@ class Settings extends Component {
                             판다 플래싱
                         </X.Button>
                     </X.Table>
-
                     <X.Table color='darkBlue' padding='big'>
                         <X.Button
                             color='settingsDefault'
@@ -988,6 +994,10 @@ const mapDispatchToProps = dispatch => ({
         Layout.emitSidebarCollapsed();
         ChffrPlus.openTetheringSettings();
     },
+    openAndroidSettings: async () => {
+        Layout.emitSidebarCollapsed();
+        ChffrPlus.openAndroidSettings();
+    },    
     reboot: () => {
         Alert.alert('재부팅', '재부팅하시겠습니까?', [
             { text: '취소', onPress: () => {}, style: 'cancel' },
