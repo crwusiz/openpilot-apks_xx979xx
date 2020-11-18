@@ -62,6 +62,7 @@ class Settings extends Component {
             expandedCell: null,
             version: {
                 versionString: '',
+                gitRemote: null,                
                 gitBranch: null,
                 gitRevision: null,
             },
@@ -479,7 +480,7 @@ class Settings extends Component {
     }
 
     calib_description(params){
-      var text = '오픈파일럿은 장치를 왼쪽,오른쪽은 4° 이내에 장착하고 위,아래는 5° 이내에 장착해야 합니다. 오픈파일럿이 계속 보정 중이므로 재설정이 필요한 경우는 처음 셋팅 이외에는 거의 없습니다.';
+      var text = '오픈파일럿은 장치를 왼쪽,오른쪽은 4˚ 이내에 장착하고 위,아래는 5˚ 이내에 장착해야 합니다. 오픈파일럿이 계속 보정 중이므로 재설정이 필요한 경우는 처음 셋팅 이외에는 거의 없습니다.';
       if ((params == null) || (params == undefined)) {
         var calib_json = null
       } else {
@@ -491,14 +492,14 @@ class Settings extends Component {
         var pitch = parseFloat(calibArr[1]) * (180/pi)
         var yaw = parseFloat(calibArr[2]) * (180/pi)
         if (pitch > 0) {
-          var pitch_str = Math.abs(pitch).toFixed(1).concat('° 위')
+          var pitch_str = Math.abs(pitch).toFixed(1).concat('˚ 위')
         } else {
-          var pitch_str = Math.abs(pitch).toFixed(1).concat('° 아래')
+          var pitch_str = Math.abs(pitch).toFixed(1).concat('˚ 아래')
         }
         if (yaw > 0) {
-          var yaw_str = Math.abs(yaw).toFixed(1).concat('° 오른쪽에')
+          var yaw_str = Math.abs(yaw).toFixed(1).concat('˚ 오른쪽에')
         } else {
-          var yaw_str = Math.abs(yaw).toFixed(1).concat('° 왼쪽에')
+          var yaw_str = Math.abs(yaw).toFixed(1).concat('˚ 왼쪽에')
         }
         text = text.concat('\n\n장치가', pitch_str, ' 그리고 ', yaw_str, ' 위치해 있습니다. ')
       }
@@ -583,7 +584,7 @@ class Settings extends Component {
                     </X.Table>
                     <X.Table>
                         <X.TableCell
-                            title='동글 ID'
+                            title='장치 ID'
                             value={ dongleId } />
                         <X.TableCell
                             title='시리얼 번호'
@@ -625,6 +626,7 @@ class Settings extends Component {
                             onPress={ this.props.openWifiSettings }>
                             Wifi 설정
                         </X.Button>
+                        /*
                         <X.Line color='transparent' size='tiny' spacing='mini' />
                         <X.Button
                             size='small'
@@ -632,6 +634,7 @@ class Settings extends Component {
                             onPress={ this.props.openTetheringSettings }>
                             테더링 설정
                         </X.Button>
+                        */
                         <X.Line color='transparent' size='tiny' spacing='mini' />
                         <X.Button
                             size='small'
@@ -650,6 +653,7 @@ class Settings extends Component {
             isSshEnabled,
             params: {
                 Version: version,
+                GitRemote: gitRemote,
                 GitBranch: gitBranch,
                 GitCommit: gitRevision,
                 Passive: isPassive,
@@ -678,6 +682,35 @@ class Settings extends Component {
                 <ScrollView
                     ref="settingsScrollView"
                     style={ Styles.settingsWindow }>
+
+                    <X.Table spacing='none'>
+                        <X.TableCell
+                            title='Git 리모트'
+                            value={ gitRemote } />                        
+                        <X.TableCell
+                            title='Git 브랜치'
+                            value={ gitBranch } />
+                        <X.TableCell
+                            title='Git 리비전'
+                            value={ gitRevision.slice(0, 12) }
+                            valueTextSize='tiny' />
+                        { gitPullOnProgress === true ? (
+                            <X.Button
+                                size='small'
+                                color='settingsDefault'
+                                onPress={ () => {} }>
+                                Git pull 진행중..
+                            </X.Button>
+                        ): (
+                            <X.Button
+                                size='small'
+                                color='settingsDefault'
+                                onPress={ () => this.handleGitPullButtonClick() }>
+                                Git pull 수행
+                            </X.Button>
+                        )}
+                    </X.Table>
+
                     <X.Table color='darkBlue'>
                         <X.TableCell
                             type='switch'
@@ -729,7 +762,7 @@ class Settings extends Component {
                                     title='자동차선변경 사용'
                                     value={ !!parseInt(autoLaneChangeEnabled) }
                                     iconSource={ Icons.road }
-                                    description='경고 : 이 기능은 안전을위해 후측방감지기능이 있는 차량만사용하세요.'
+                                    description='경고 : 이 기능은 안전을위해 후측방감지 옵션이있는 차량만사용하세요.'
                                     isExpanded={ expandedCell == 'autoLaneChange_enabled' }
                                     handleExpanded={ () => this.handleExpanded('autoLaneChange_enabled') }
                                     handleChanged={ this.props.setAutoLaneChangeEnabled } />
@@ -780,31 +813,6 @@ class Settings extends Component {
                             </X.Button>
                             )}
                         </X.TableCell>
-                    </X.Table>
-
-                    <X.Table spacing='none'>                
-                        <X.TableCell
-                            title='Git 브랜치'
-                            value={ gitBranch } />
-                        <X.TableCell
-                            title='Git 리비전'
-                            value={ gitRevision.slice(0, 12) }
-                            valueTextSize='tiny' />
-                        { gitPullOnProgress === true ? (
-                            <X.Button
-                                size='small'
-                                color='settingsDefault'
-                                onPress={ () => {} }>
-                                Git pull 진행중..
-                            </X.Button>
-                        ): (
-                            <X.Button
-                                size='small'
-                                color='settingsDefault'
-                                onPress={ () => this.handleGitPullButtonClick() }>
-                                Git pull 수행
-                            </X.Button>
-                        )}
                     </X.Table>
 
                     <X.Table spacing='none'>
