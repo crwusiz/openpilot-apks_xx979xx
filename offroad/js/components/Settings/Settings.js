@@ -122,9 +122,9 @@ class Settings extends Component {
 
     handleGitPullButtonClick() {
         this.setState({gitPullOnProgress:true});
-        Alert.alert('Git pull', 'commit하지 않은 모든 수정사항이 사라집니다.', [            
+        Alert.alert('git reset --hard & git pull', '사용중인 브랜치의 최근 수정된 내용으로 변경됩니다.', [
             { text: '취소', onPress: () => {this.setState({gitPullOnProgress:false}); }, style: 'cancel' },
-            { text: 'Git pull & 재부팅', onPress: () => {this.setState({gitPullOnProgress:true}); ChffrPlus.processGitPullandReboot();} },            
+            { text: '실행', onPress: () => {this.setState({gitPullOnProgress:true}); ChffrPlus.processGitPullandReboot();} },            
         ],
         { cancelable: false },
         );
@@ -134,7 +134,7 @@ class Settings extends Component {
         this.props.deleteParam(Params.KEY_CALIBRATION_PARAMS);
         this.props.deleteParam(Params.KEY_LIVE_PARAMETERS);
         this.setState({ calibration: null });
-        Alert.alert('재부팅', '캘리브레이션 작업을위해서는 재부팅이 필요합니다.', [
+        Alert.alert('재부팅', '캘리브레이션을 초기화하려면 재부팅이 필요합니다.', [
             { text: '취소', onPress: () => {}, style: 'cancel' },
             { text: '재부팅', onPress: () => ChffrPlus.reboot() },
         ]);        
@@ -151,7 +151,7 @@ class Settings extends Component {
     }
 
     handlePressedUpdatePanda = async () => {
-        Alert.alert('판다 플래싱', '판다 플래싱을 실행합니다. 진행되는 동안 판다 LED가 녹색으로 빠르게 깜빡일 것이며, 플래싱이 완료되면 재부팅을 합니다.', [
+        Alert.alert('판다 펌웨어 플래싱', '판다 펌웨어 플래싱을 실행합니다. 플래싱이 완료되면 재부팅됩니다.', [
             { text: '취소', onPress: () => {}, style: 'cancel' },
             { text: '실행', onPress: () => ChffrPlus.updatePandaFirmware() },
         ]);
@@ -693,21 +693,12 @@ class Settings extends Component {
                         <X.TableCell
                             title='Git Commit'
                             value={ gitCommit.slice(0, 7) } />
-                        { gitPullOnProgress === true ? (
-                            <X.Button
-                                size='small'
-                                color='settingsDefault'
-                                onPress={ () => {} }>
-                                Git pull 진행중..
-                            </X.Button>
-                        ): (
-                            <X.Button
-                                size='small'
-                                color='settingsDefault'
-                                onPress={ () => this.handleGitPullButtonClick() }>
-                                Git pull 수행
-                            </X.Button>
-                        )}
+                        <X.Button
+                            size='small'
+                            color='settingsDefault'
+                            onPress={ () => this.handleGitPullButtonClick() }>
+                            git reset --hard & git pull
+                        </X.Button>
                         <X.TableCell
                             type='custom'
                             title='prebuilt 설정'
@@ -824,7 +815,7 @@ class Settings extends Component {
                             size='small'
                             color='settingsDefault'
                             onPress={ this.handlePressedUpdatePanda  }>
-                            판다 플래싱
+                            판다 펌웨어 플래싱
                         </X.Button>
                     </X.Table>
                     <X.Table color='darkBlue' padding='big'>
