@@ -596,7 +596,7 @@ class Settings extends Component {
                         <X.TableCell
                             title='업로드 속도'
                             value={ txSpeedKbps + ' kbps' } />
-                         */}                         
+                        */}                         
                     </X.Table>
                 </ScrollView>
             </View>
@@ -626,7 +626,7 @@ class Settings extends Component {
                             onPress={ this.props.openWifiSettings }>
                             Wifi 설정
                         </X.Button>
-                        /*
+                        {/*
                         <X.Line color='transparent' size='tiny' spacing='mini' />
                         <X.Button
                             size='small'
@@ -634,7 +634,7 @@ class Settings extends Component {
                             onPress={ this.props.openTetheringSettings }>
                             테더링 설정
                         </X.Button>
-                        */
+                        */}
                         <X.Line color='transparent' size='tiny' spacing='mini' />
                         <X.Button
                             size='small'
