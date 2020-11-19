@@ -690,7 +690,8 @@ class Settings extends Component {
                             valueTextSize='tiny' />
                         <X.TableCell
                             title='Git Commit'
-                            value={ gitCommit.slice(0, 7) } />
+                            value={ gitCommit.slice(0, 7) }
+                            valueTextSize='tiny' />
                         <X.Button
                             size='small'
                             color='settingsDefault'
@@ -737,7 +738,7 @@ class Settings extends Component {
                                     title='Long Control 사용'
                                     value={ !!parseInt(longControlEnabled) }
                                     iconSource={ Icons.long }
-                                    description='경고 : 이 기능은 오픈파일럿이 속도를 컨트롤하기때문에 사용시 주의하세요. ( ASCC 레이더 배선개조필요 )'
+                                    description='이 기능은 오픈파일럿이 속도를 컨트롤하기때문에 사용시 주의하세요. ( ASCC 레이더 배선개조필요 )'
                                     isExpanded={ expandedCell == 'longcontrol_enabled' }
                                     handleExpanded={ () => this.handleExpanded('longcontrol_enabled') }
                                     handleChanged={ this.props.setLongControlEnabled } />
@@ -748,7 +749,7 @@ class Settings extends Component {
                                     title='MAD 모드 사용'
                                     value={ !!parseInt(madModeEnabled) }
                                     iconSource={ Icons.warning }
-                                    description='경고 : 이 기능은 크루즈버튼으로 오픈파일럿이 활성화됩니다.'
+                                    description='이 기능은 크루즈버튼으로 오픈파일럿이 활성화됩니다.'
                                     isExpanded={ expandedCell == 'madMode_enabled' }
                                     handleExpanded={ () => this.handleExpanded('madMode_enabled') }
                                     handleChanged={ this.props.setMadModeEnabled } />
@@ -759,7 +760,7 @@ class Settings extends Component {
                                     title='자동차선변경 사용'
                                     value={ !!parseInt(autoLaneChangeEnabled) }
                                     iconSource={ Icons.lca }
-                                    description='경고 : 이 기능은 안전을위해 후측방감지기능이 있는 차량만 사용하시기바랍니다.'
+                                    description='이 기능은 안전을위해 후측방감지기능이 있는 차량만 사용하시기바랍니다.'
                                     isExpanded={ expandedCell == 'autoLaneChange_enabled' }
                                     handleExpanded={ () => this.handleExpanded('autoLaneChange_enabled') }
                                     handleChanged={ this.props.setAutoLaneChangeEnabled } />
