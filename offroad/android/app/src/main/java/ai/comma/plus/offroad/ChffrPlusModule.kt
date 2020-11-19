@@ -257,7 +257,7 @@ class ChffrPlusModule(val ctx: ReactApplicationContext) :
     @ReactMethod
     fun processGitPull() {
         try {
-            Toast.makeText(ctx, "git pull을 시작합니다.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ctx, "실행합니다.", Toast.LENGTH_SHORT).show();
 
             val p1 = Runtime.getRuntime().exec(arrayOf("/system/bin/su", "-c", "LD_LIBRARY_PATH=/data/phonelibs:/data/data/com.termux/files/usr/lib  data/data/com.termux/files/usr/bin/git -C /data/openpilot reset --hard"))
 
@@ -281,31 +281,13 @@ class ChffrPlusModule(val ctx: ReactApplicationContext) :
             }
             p3.waitFor();
 
-            Toast.makeText(ctx, "git pull이 종료되었습니다.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ctx, "완료되었습니다.", Toast.LENGTH_SHORT).show();
 
         } catch (e: IOException) {
             CloudLog.exception("BaseUIReactModule.shutdown", e)
         }
     }
-
-    @ReactMethod
-    fun makePrebuilt() {
-        try {
-            Runtime.getRuntime().exec(arrayOf("/system/bin/su", "-c", "touch /data/openpilot/prebuilt"))
-        } catch (e: IOException) {
-            CloudLog.exception("BaseUIReactModule.shutdown", e)
-        }
-    }
-
-    @ReactMethod
-    fun deletePrebuilt() {
-        try {
-            Runtime.getRuntime().exec(arrayOf("/system/bin/su", "-c", "rm /data/openpilot/prebuilt"))
-        } catch (e: IOException) {
-            CloudLog.exception("BaseUIReactModule.shutdown", e)
-        }
-    }
-                
+        
     @ReactMethod
     fun updatePandaFirmware() {
         try {

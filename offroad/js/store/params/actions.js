@@ -48,7 +48,7 @@ const PARAMS = [
   "MadModeEnabled",
   "AutoLaneChangeEnabled",
   "IsRHD",
-  "IsPrebuiltOn"
+  "PutPrebuilt",  
 ].concat(ALERT_PARAMS);
 
 export function refreshParams(params) {

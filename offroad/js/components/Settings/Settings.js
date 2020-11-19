@@ -47,6 +47,12 @@ const Icons = {
     openpilot_mirrored: require('../../img/icon_openpilot_mirrored.png'),
     monitoring: require('../../img/icon_monitoring.png'),
     road: require('../../img/icon_road.png'),
+    lca: require('../../img/icon_lca.png'),
+    long: require('../../img/icon_long.png'),
+    ldws: require('../../img/icon_ldws.png'),
+    ssh: require('../../img/icon_ssh.png'),
+    discord: require('../../img/icon_discord.png'),
+    prebuilt: require('../../img/icon_prebuilt.png'),
 }
 
 class Settings extends Component {
@@ -122,7 +128,7 @@ class Settings extends Component {
 
     handleGitPullButtonClick() {
         this.setState({gitPullOnProgress:true});
-        Alert.alert('git reset --hard & git pull', '사용중인 브랜치의 최근 수정된 내용으로 변경됩니다.', [
+        Alert.alert('git reset & git pull', '사용중인 브랜치의 최근 수정된 내용으로 변경됩니다.', [
             { text: '취소', onPress: () => {this.setState({gitPullOnProgress:false}); }, style: 'cancel' },
             { text: '실행', onPress: () => {this.setState({gitPullOnProgress:true}); ChffrPlus.processGitPullandReboot();} },            
         ],
@@ -134,20 +140,10 @@ class Settings extends Component {
         this.props.deleteParam(Params.KEY_CALIBRATION_PARAMS);
         this.props.deleteParam(Params.KEY_LIVE_PARAMETERS);
         this.setState({ calibration: null });
-        Alert.alert('재부팅', '캘리브레이션을 초기화하려면 재부팅이 필요합니다.', [
+        Alert.alert('재부팅', '캘리브레이션 상태를 초기화하려면 재부팅이 필요합니다.', [
             { text: '취소', onPress: () => {}, style: 'cancel' },
             { text: '재부팅', onPress: () => ChffrPlus.reboot() },
         ]);        
-    }
-
-    handlePressedMakePrebuilt() {
-        this.props.setPrebuiltOn(1)
-        ChffrPlus.makePrebuilt()
-
-    }
-    handlePressedDeletePrebuilt() {
-        this.props.setPrebuiltOn(0)
-        ChffrPlus.deletePrebuilt()
     }
 
     handlePressedUpdatePanda = async () => {
@@ -344,7 +340,7 @@ class Settings extends Component {
                             type='switch'
                             title='차선이탈경보 사용'
                             value={ !!parseInt(isLaneDepartureWarningEnabled) }
-                            iconSource={ Icons.warning }
+                            iconSource={ Icons.ldws }
                             description='50km 이상의 속도로 주행하는동안 방향지시등 조작없이 차량이 차선을 이탈하면 차선이탈경보를 보냅니다'
                             isExpanded={ expandedCell == 'ldw' }
                             handleExpanded={ () => this.handleExpanded('ldw') }
@@ -353,7 +349,7 @@ class Settings extends Component {
                             type='switch'
                             title='운전자 모니터링 기록 사용'
                             value={ !!parseInt(recordFront) }
-                            iconSource={ Icons.network }
+                            iconSource={ Icons.monitoring }
                             description='운전자 모니터링 카메라 데이터를 기록하고 운전자 모니터링 알고리즘개선에 참여하세요'
                             isExpanded={ expandedCell == 'record_front' }
                             handleExpanded={ () => this.handleExpanded('record_front') }
@@ -656,6 +652,7 @@ class Settings extends Component {
                 GitRemote: gitRemote,
                 GitBranch: gitBranch,
                 GitCommit: gitCommit,
+                PutPrebuilt: putPrebuilt,                
                 Passive: isPassive,
                 PandaFirmwareHex: pandaFirmwareHex,
                 PandaDongleId: pandaDongleId,
@@ -664,7 +661,6 @@ class Settings extends Component {
                 LongControlEnabled: longControlEnabled,
                 MadModeEnabled: madModeEnabled,
                 AutoLaneChangeEnabled: autoLaneChangeEnabled,
-                IsPrebuiltOn : isPrebuiltOn,
             },
         } = this.props;
         const { expandedCell, gitPullOnProgress } = this.state;
@@ -686,10 +682,10 @@ class Settings extends Component {
                     <X.Table spacing='none'>
                         <X.TableCell
                             title='Git Remote'
-                            value={ gitRemote } />                        
+                            value={ gitRemote } size='tiny'/>                        
                         <X.TableCell
                             title='Git Branch'
-                            value={ gitBranch } />
+                            value={ gitBranch } size='tiny'/>
                         <X.TableCell
                             title='Git Commit'
                             value={ gitCommit.slice(0, 7) } />
@@ -697,32 +693,18 @@ class Settings extends Component {
                             size='small'
                             color='settingsDefault'
                             onPress={ () => this.handleGitPullButtonClick() }>
-                            git reset --hard & git pull
-                        </X.Button>
+                            git reset & git pull
+                        </X.Button>                            
                         <X.TableCell
-                            type='custom'
-                            title='prebuilt 설정'
-                            description='prebuilt 파일을 생성하여 부팅시 로딩시간을 줄여줍니다. 재부팅후 적용됩니다.'
-                            isExpanded={ expandedCell == 'prebuilt' }
-                            handleExpanded={ () => this.handleExpanded('prebuilt') }>
-                            {!parseInt(isPrebuiltOn) ? (
-                                <X.Button
-                                size='tiny'
-                                color='settingsDefault'
-                                onPress={ () => this.handlePressedMakePrebuilt()  }
-                                style={ { minWidth: '100%' } }>
-                                생성
-                                </X.Button>
-                            ) : (
-                                <X.Button
-                                size='tiny'
-                                color='settingsDefault'
-                                onPress={ () => this.handlePressedDeletePrebuilt()  }
-                                style={ { minWidth: '100%' } }>
-                                삭제
-                            </X.Button>
-                            )}
-                        </X.TableCell>                        
+                            type='switch'
+                            title='prebuilt 파일 생성'
+                            value={ !!parseInt(putPrebuilt) }
+                            iconSource={ Icons.prebuilt }
+                            description='prebuilt 파일을 생성하여 부팅속도를 향상시켜줍니다. 재부팅후 적용됩니다.'
+                            isExpanded={ expandedCell == 'putPrebuilt' }
+                            handleExpanded={ () => this.handleExpanded('putPrebuilt') }
+                            handleChanged={ this.props.setPutPrebuilt } />
+                        </X.TableCell>
                     </X.Table>
 
                     <X.Table color='darkBlue'>
@@ -730,7 +712,7 @@ class Settings extends Component {
                             type='switch'
                             title='SSH 접속 사용'
                             value={ isSshEnabled }
-                            iconSource={ Icons.developer }
+                            iconSource={ Icons.ssh }
                             description='SSH를 이용한 장치의 접속을 허용합니다.'
                             isExpanded={ expandedCell == 'ssh' }
                             handleExpanded={ () => this.handleExpanded('ssh') }
@@ -739,9 +721,9 @@ class Settings extends Component {
                             type='switch'
                             title='커뮤니티기능 사용'
                             value={ !!parseInt(communityFeatures) }
-                            iconSource={ Icons.developer }
+                            iconSource={ Icons.discord }
                             descriptionExtra={
-                              <X.Text color='white' size='tiny'>                                  
+                              <X.Text color='white' size='tiny'>
                                   커뮤니티 기능은 comma에서 공식 지원하지않으며 표준 안전모델 충족기준이 확인되지않았으니 사용시 주의하세요.
                               </X.Text>
                             }
@@ -753,7 +735,7 @@ class Settings extends Component {
                                     type='switch'
                                     title='Long Control 사용'
                                     value={ !!parseInt(longControlEnabled) }
-                                    iconSource={ Icons.openpilot }
+                                    iconSource={ Icons.long }
                                     description='경고 : 이 기능은 오픈파일럿이 속도를 컨트롤하기때문에 사용시 주의하세요.'
                                     isExpanded={ expandedCell == 'longcontrol_enabled' }
                                     handleExpanded={ () => this.handleExpanded('longcontrol_enabled') }
@@ -775,7 +757,7 @@ class Settings extends Component {
                                     type='switch'
                                     title='자동차선변경 사용'
                                     value={ !!parseInt(autoLaneChangeEnabled) }
-                                    iconSource={ Icons.road }
+                                    iconSource={ Icons.lca }
                                     description='경고 : 이 기능은 안전을위해 후측방감지 옵션이있는 차량만사용하세요.'
                                     isExpanded={ expandedCell == 'autoLaneChange_enabled' }
                                     handleExpanded={ () => this.handleExpanded('autoLaneChange_enabled') }
@@ -1048,20 +1030,11 @@ const mapDispatchToProps = dispatch => ({
         dispatch(updateParam(Params.KEY_SPEED_LIMIT_OFFSET, (speedLimitOffset).toString()));
     },
     setCommunityFeatures: (communityFeatures) => {
-        if (communityFeatures == 1) {
-            Alert.alert('커뮤니티 기능 사용', '커뮤니티 기능은 comma에서 공식 지원하지않으며 표준 안전모델 충족기준이 확인되지않았으니 사용시 주의하세요', [
-                { text: '취소', onPress: () => {}, style: 'cancel' },
-                { text: '사용', onPress: () => {
-                    dispatch(updateParam(Params.KEY_COMMUNITY_FEATURES, (communityFeatures | 0).toString()));
-                } },
-            ]);
-        } else {
-            dispatch(updateParam(Params.KEY_COMMUNITY_FEATURES, (communityFeatures | 0).toString()));
-        }
+        dispatch(updateParam(Params.KEY_COMMUNITY_FEATURES, (communityFeatures | 0).toString()));
     },
-    setPrebuiltOn: (isPrebuilt) => {
-        dispatch(updateParam(Params.KEY_PUT_PREBUILT, (isPrebuilt | 0).toString()));
-    },  
+    setPutPrebuilt: (putPrebuilt) => {
+        dispatch(updateParam(Params.KEY_PUT_PREBUILT, (putPrebuilt | 0).toString()));
+    },
     setLaneDepartureWarningEnabled: (isLaneDepartureWarningEnabled) => {
         dispatch(updateParam(Params.KEY_LANE_DEPARTURE_WARNING_ENABLED, (isLaneDepartureWarningEnabled | 0).toString()));
     },
