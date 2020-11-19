@@ -64,7 +64,7 @@ class Settings extends Component {
                 versionString: '',
                 gitRemote: null,                
                 gitBranch: null,
-                gitRevision: null,
+                gitCommit: null,
             },
             speedLimitOffsetInt: '0',
             githubUsername: '',
@@ -655,7 +655,7 @@ class Settings extends Component {
                 Version: version,
                 GitRemote: gitRemote,
                 GitBranch: gitBranch,
-                GitCommit: gitRevision,
+                GitCommit: gitCommit,
                 Passive: isPassive,
                 PandaFirmwareHex: pandaFirmwareHex,
                 PandaDongleId: pandaDongleId,
@@ -685,15 +685,14 @@ class Settings extends Component {
 
                     <X.Table spacing='none'>
                         <X.TableCell
-                            title='Git 리모트'
+                            title='Git Remote'
                             value={ gitRemote } />                        
                         <X.TableCell
-                            title='Git 브랜치'
+                            title='Git Branch'
                             value={ gitBranch } />
                         <X.TableCell
-                            title='Git 리비전'
-                            value={ gitRevision.slice(0, 12) }
-                            valueTextSize='tiny' />
+                            title='Git Commit'
+                            value={ gitCommit.slice(0, 7) } />
                         { gitPullOnProgress === true ? (
                             <X.Button
                                 size='small'
@@ -709,6 +708,30 @@ class Settings extends Component {
                                 Git pull 수행
                             </X.Button>
                         )}
+                        <X.TableCell
+                            type='custom'
+                            title='prebuilt 설정'
+                            description='prebuilt 파일을 생성하여 부팅시 로딩시간을 줄여줍니다. 재부팅후 적용됩니다.'
+                            isExpanded={ expandedCell == 'prebuilt' }
+                            handleExpanded={ () => this.handleExpanded('prebuilt') }>
+                            {!parseInt(isPrebuiltOn) ? (
+                                <X.Button
+                                size='tiny'
+                                color='settingsDefault'
+                                onPress={ () => this.handlePressedMakePrebuilt()  }
+                                style={ { minWidth: '100%' } }>
+                                생성
+                                </X.Button>
+                            ) : (
+                                <X.Button
+                                size='tiny'
+                                color='settingsDefault'
+                                onPress={ () => this.handlePressedDeletePrebuilt()  }
+                                style={ { minWidth: '100%' } }>
+                                삭제
+                            </X.Button>
+                            )}
+                        </X.TableCell>                        
                     </X.Table>
 
                     <X.Table color='darkBlue'>
@@ -788,41 +811,14 @@ class Settings extends Component {
                     </X.Table>
                         */}
 
-                    <X.Table color='darkBlue'>                        
-                        <X.TableCell
-                            type='custom'
-                            title='prebuilt 설정'
-                            description='prebuilt 파일을 생성하여 부팅시 로딩시간을 줄여줍니다. 재부팅후 적용됩니다.'
-                            isExpanded={ expandedCell == 'prebuilt' }
-                            handleExpanded={ () => this.handleExpanded('prebuilt') }>
-                            {!parseInt(isPrebuiltOn) ? (
-                                <X.Button
-                                size='tiny'
-                                color='settingsDefault'
-                                onPress={ () => this.handlePressedMakePrebuilt()  }
-                                style={ { minWidth: '100%' } }>
-                                생성
-                                </X.Button>
-                            ) : (
-                                <X.Button
-                                size='tiny'
-                                color='settingsDefault'
-                                onPress={ () => this.handlePressedDeletePrebuilt()  }
-                                style={ { minWidth: '100%' } }>
-                                삭제
-                            </X.Button>
-                            )}
-                        </X.TableCell>
-                    </X.Table>
-
                     <X.Table spacing='none'>
                         <X.TableCell
                             title='판다 펌웨어'
-                            value={ pandaFirmwareHex != null ? pandaFirmwareHex : 'N/A' }
+                            value={ pandaFirmwareHex != null ? pandaFirmwareHex : '연결안됨' }
                             valueTextSize='tiny' />
                         <X.TableCell
                             title='판다 동글 ID'
-                            value={ (pandaDongleId != null && pandaDongleId != "unprovisioned") ? pandaDongleId : 'N/A' }
+                            value={ (pandaDongleId != null && pandaDongleId != "unprovisioned") ? pandaDongleId : '연결안됨' }
                             valueTextSize='tiny' />
                         <X.Button
                             size='small'
