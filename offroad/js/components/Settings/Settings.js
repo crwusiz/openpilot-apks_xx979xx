@@ -704,7 +704,6 @@ class Settings extends Component {
                             isExpanded={ expandedCell == 'putPrebuilt' }
                             handleExpanded={ () => this.handleExpanded('putPrebuilt') }
                             handleChanged={ this.props.setPutPrebuilt } />
-                        </X.TableCell>
                     </X.Table>
 
                     <X.Table color='darkBlue'>
