@@ -1,4 +1,6 @@
 import moment from 'moment';
+import 'moment/locale/ko';
+moment.locale('ko');
 
 import { ENV, DARKSKY_API_KEY } from '../../config';
 
@@ -9,7 +11,7 @@ export function updateDate() {
   return function(dispatch) {
     dispatch({
       type: ACTION_UPDATE_DATE,
-      date: moment().format('dddd, MMMM Do')
+      date: moment().format('LLLL')
     });
   }
 }
