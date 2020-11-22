@@ -53,6 +53,10 @@ const Icons = {
     openpilot_mirrored: require('../../img/icon_openpilot_mirrored.png'),
     monitoring: require('../../img/icon_monitoring.png'),
     road: require('../../img/icon_road.png'),
+    discord: require('../../img/icon_discord.png'),
+    ssh: require('../../img/icon_ssh.png'),
+    ldws: require('../../img/icon_ldws.png'),
+    lca: require('../../img/icon_lca.png'),    
 }
 
 class Settings extends Component {
@@ -297,7 +301,7 @@ class Settings extends Component {
                                 type='switch'
                                 title='Enable Lane Change Assist'
                                 value={ !!parseInt(laneChangeEnabled) }
-                                iconSource={ Icons.road }
+                                iconSource={ Icons.lca }
                                 description='Perform assisted lane changes with openpilot by checking your surroundings for safety, activating the turn signal and gently nudging the steering wheel towards your desired lane. openpilot is not capable of checking if a lane change is safe. You must continuously observe your surroundings to use this feature.'
                                 isExpanded={ expandedCell == 'lanechange_enabled' }
                                 handleExpanded={ () => this.handleExpanded('lanechange_enabled') }
@@ -307,7 +311,7 @@ class Settings extends Component {
                             type='switch'
                             title='Enable Lane Departure Warnings'
                             value={ !!parseInt(isLaneDepartureWarningEnabled) }
-                            iconSource={ Icons.warning }
+                            iconSource={ Icons.ldws }
                             description='Receive alerts to steer back into the lane when your vehicle drifts over a detected lane line without a turn signal activated while driving over 31mph (50kph).'
                             isExpanded={ expandedCell == 'ldw' }
                             handleExpanded={ () => this.handleExpanded('ldw') }
@@ -652,7 +656,7 @@ class Settings extends Component {
                             type='switch'
                             title='Enable Community Features'
                             value={ !!parseInt(communityFeatures) }
-                            iconSource={ Icons.developer }
+                            iconSource={ Icons.discord }
                             descriptionExtra={
                               <X.Text color='white' size='tiny'>
                                   Use features from the open source community that are not maintained or supported by comma.ai and have not been confirmed to meet the standard safety model. These features include community supported cars and community supported hardware. Be extra cautious when using these features.{'\n'}
@@ -665,13 +669,13 @@ class Settings extends Component {
                             type='switch'
                             title='Enable SSH'
                             value={ isSshEnabled }
-                            iconSource={ Icons.developer }
+                            iconSource={ Icons.ssh }
                             description='Allow devices to connect to your device using Secure Shell (SSH).'
                             isExpanded={ expandedCell == 'ssh' }
                             handleExpanded={ () => this.handleExpanded('ssh') }
                             handleChanged={ this.props.setSshEnabled } />
                         <X.TableCell
-                            iconSource={ Icons.developer }
+                            iconSource={ Icons.ssh }
                             title='Authorized SSH Keys'
                             descriptionExtra={ this.renderSshInput() }
                             isExpanded={ expandedCell === 'ssh_keys' }
