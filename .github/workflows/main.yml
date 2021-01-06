@@ -1,28 +1,17 @@
-name: openpilot apk tests
-on: [push, pull_request]
+name: build offload apk
+on : push
+
 
 env:
   RUN: docker run --rm apks /bin/sh -c
   BUILD: |
     docker pull $(grep -ioP '(?<=^from)\s+\S+' Dockerfile) || true
     docker pull docker.io/commaai/openpilot-apks:latest || true
-    docker build --cache-from docker.io/commaai/openpilot-apks:latest -t apks -f Dockerfile .
+    docker build -t apks -f Dockerfile .
+  CACHE_NAME: cache-image
+
 
 jobs:
-  docker_push:
-    name: docker push
-    runs-on: ubuntu-16.04
-    if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request' && github.repository == 'commaai/openpilot-apks'
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build Docker image
-        run: eval "$BUILD"
-      - name: Push to dockerhub
-        run: |
-          docker login -u wmelching -p ${{ secrets.COMMA_DOCKERHUB_TOKEN }}
-          docker tag apks docker.io/commaai/openpilot-apks:latest
-          docker push docker.io/commaai/openpilot-apks:latest
-
   offroad:
     name: offroad
     runs-on: ubuntu-16.04
@@ -38,3 +27,11 @@ jobs:
         with:
           name: ai.comma.plus.offroad.apk
           path: ai.comma.plus.offroad.apk
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            ai.comma.plus.offroad.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
