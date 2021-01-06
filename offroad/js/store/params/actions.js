@@ -48,7 +48,8 @@ const PARAMS = [
   "MadModeEnabled",
   "AutoLaneChangeEnabled",
   "IsRHD",
-  "PutPrebuilt",  
+  "PutPrebuilt",
+  "LdwsMfc",
 ].concat(ALERT_PARAMS);
 
 export function refreshParams(params) {
