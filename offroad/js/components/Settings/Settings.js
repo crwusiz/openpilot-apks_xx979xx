@@ -727,13 +727,6 @@ class Settings extends Component {
                             value={ !!parseInt(communityFeatures) }
                             iconSource={ Icons.discord }
                             description='커뮤니티기능은 comma.ai 에서 공식지원 기능이 아니며 표준 안전모델 충족기준이 확인되지않았으니 사용시 주의하세요.'
-                            {/*
-                            descriptionExtra={
-                              <X.Text color='white' size='tiny'>
-                                  커뮤니티 기능은 comma에서 공식 지원하지않으며 표준 안전모델 충족기준이 확인되지않았으니 사용시 주의하세요.
-                              </X.Text>
-                            }
-                            */}
                             isExpanded={ expandedCell == 'communityFeatures' }
                             handleExpanded={ () => this.handleExpanded('communityFeatures') }
                             handleChanged={ this.props.setCommunityFeatures } />
