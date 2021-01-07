@@ -43,5 +43,5 @@ export const Params = {
     KEY_MAD_MODE_ENABLED: 'MadModeEnabled',
     KEY_AUTO_LANE_CHANGE_ENABLED: 'AutoLaneChangeEnabled',
     KEY_PUT_PREBUILT: 'PutPrebuilt',
-    KEY_LDWS_MFC: 'LdwsMFC',
+    KEY_LDWS_MFC: 'LdwsMfc',
 };

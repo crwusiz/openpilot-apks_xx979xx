@@ -726,11 +726,14 @@ class Settings extends Component {
                             title='커뮤니티기능 사용'
                             value={ !!parseInt(communityFeatures) }
                             iconSource={ Icons.discord }
+                            description='커뮤니티기능은 comma.ai 에서 공식지원 기능이 아니며 표준 안전모델 충족기준이 확인되지않았으니 사용시 주의하세요.'
+                            {/*
                             descriptionExtra={
                               <X.Text color='white' size='tiny'>
                                   커뮤니티 기능은 comma에서 공식 지원하지않으며 표준 안전모델 충족기준이 확인되지않았으니 사용시 주의하세요.
                               </X.Text>
                             }
+                            */}
                             isExpanded={ expandedCell == 'communityFeatures' }
                             handleExpanded={ () => this.handleExpanded('communityFeatures') }
                             handleChanged={ this.props.setCommunityFeatures } />
@@ -740,7 +743,7 @@ class Settings extends Component {
                                     title='Long Control 사용'
                                     value={ !!parseInt(longControlEnabled) }
                                     iconSource={ Icons.long }
-                                    description='이 기능은 오픈파일럿이 속도를 컨트롤하기때문에 사용시 주의하세요. ( ASCC 레이더 배선개조필요 )'
+                                    description='이 기능은 오픈파일럿이 속도를 컨트롤하기때문에 사용시 주의하세요. ( SCC 레이더 배선개조필요 )'
                                     isExpanded={ expandedCell == 'longcontrol_enabled' }
                                     handleExpanded={ () => this.handleExpanded('longcontrol_enabled') }
                                     handleChanged={ this.props.setLongControlEnabled } />
@@ -772,7 +775,7 @@ class Settings extends Component {
                             title='LDWS MFC 카메라 사용'
                             value={ !!parseInt(ldwsMfc) }
                             iconSource={ Icons.ldwsmfc }
-                            description='LDWS MFC 카메라 장착차량은 이 기능을 사용으로 .'
+                            description='LDWS MFC 카메라 장착차량은 이 기능을 사용으로 설정하세요.'
                             isExpanded={ expandedCell == 'ldwsMfc' }
                             handleExpanded={ () => this.handleExpanded('ldwsMfc') }
                             handleChanged={ this.props.setLdwsMfc } />
@@ -1048,9 +1051,6 @@ const mapDispatchToProps = dispatch => ({
     setPutPrebuilt: (putPrebuilt) => {
         dispatch(updateParam(Params.KEY_PUT_PREBUILT, (putPrebuilt | 0).toString()));
     },
-    setLdwsMfc: (ldwsMfc) => {
-        dispatch(updateParam(Params.KEY_LDWS_MFC, (ldwsMfc | 0).toString()));
-    },
     setLaneDepartureWarningEnabled: (isLaneDepartureWarningEnabled) => {
         dispatch(updateParam(Params.KEY_LANE_DEPARTURE_WARNING_ENABLED, (isLaneDepartureWarningEnabled | 0).toString()));
     },
@@ -1068,6 +1068,9 @@ const mapDispatchToProps = dispatch => ({
     },
     setAutoLaneChangeEnabled: (autoLaneChangeEnabled) => {
         dispatch(updateParam(Params.KEY_AUTO_LANE_CHANGE_ENABLED, (autoLaneChangeEnabled | 0).toString()));
+    },
+    setLdwsMfc: (ldwsMfc) => {
+        dispatch(updateParam(Params.KEY_LDWS_MFC, (ldwsMfc | 0).toString()));
     },
     deleteParam: (param) => {
         dispatch(deleteParam(param));
