@@ -322,12 +322,12 @@ class Onboarding extends Component {
                 <X.Text
                     size='jumbo' color='white' weight='bold'
                     style={ Styles.onboardingStepHeader }>
-                    환영합니다 [ 오픈파일럿 알파 ]
+                    오픈파일럿 by comma.ai
                 </X.Text>
                 <X.Text
                     color='white' weight='light'
                     style={ Styles.onboardingStepContext }>
-                    이제 모든 설치가 완료되었으므로 테스트하기 전에 오픈파일럿의 기능과 한계를 알파 소프트웨어로 이해하는 것이 중요합니다
+                    오픈파일럿 설치가 완료되었습니다. 이제 트레이닝 가이드를 통해서 오픈파일럿의 기능과 한계를 이해하는것이 중요합니다.
                 </X.Text>
                 <View style={ Styles.onboardingPrimaryAction }>
                     <X.Button
@@ -367,14 +367,14 @@ class Onboarding extends Component {
                         <X.Text
                             size='smallish' color='white' weight='light'
                             style={ Styles.onboardingStepContextSmall }>
-                            오픈파일럿은 자율주행 시스템이 아닙니다. 이것은 오픈파일럿이 운전자 없이 주행을 하는것이 아니라 운전자와 함께 동작하도록 설계되었다는것을 의미합니다. 사용시 항상 주의해야 합니다
+                            오픈파일럿은 자율주행 시스템이 아닙니다. 이것은 오픈파일럿이 운전자 조작없이 주행을 하는것이 아니라 운전자와 함께 동작하도록 설계되었다는것을 의미하며 항상 주의해야 합니다
                         </X.Text>
                         <X.CheckboxField
                             size='small'
                             color='white'
                             isChecked={ stepChecks.includes(1) }
                             onPress={ () => this.handleIntroCheckboxPressed(1) }
-                            label='나는 항상 도로를 주시하겠습니다.' />
+                            label='나는 항상 도로상황을 주시하겠습니다.' />
                         <X.CheckboxField
                             size='small'
                             color='white'
@@ -419,7 +419,7 @@ class Onboarding extends Component {
                     <X.Text
                         size='smallish' color='white' weight='light'
                         style={ Styles.onboardingStepContextSmall }>
-                        차량을 제어하기 위해 어떤 신호를 보내기 전에 센서가 결합되어 도로의 장면을 구성합니다
+                        조향제어 신호를 보내기 전에 센서가 결합되어 도로의 장면을 구성합니다
                     </X.Text>
                     <X.RadioField
                         size='big'
@@ -459,12 +459,12 @@ class Onboarding extends Component {
                 <X.Text
                     size='small' color='white' weight='light'
                     style={ Styles.onboardingStepContextSmaller }>
-                    비전 알고리즘은 도로를 향한 카메라를 이용하여 운전 경로를 결정합니다
+                    오픈파일럿의 비전 알고리즘은 장치의 카메라를 이용하여 운전 경로를 결정합니다.
                 </X.Text>
                 <X.Text
                     size='small' color='white' weight='light'
                     style={ Styles.onboardingStepContextSmaller }>
-                    차선을 표시하는선은 차선을 찾는 자신감을 반영하기 위해 다양한 너비로 그려집니다
+                    차선을 표시하는선은 차선을 찾는 자신감을 반영하기 위해 다양한 너비로 그려집니다.
                 </X.Text>
                 <X.Button color='ghost'
                     style={ Styles.onboardingStepPointInstruction }
@@ -500,12 +500,12 @@ class Onboarding extends Component {
                 <X.Text
                     size='small' color='white' weight='light'
                     style={ Styles.onboardingStepContextSmaller }>
-                    차량에 장착되어있는 레이더는 오픈파일럿의 제어를 위한 앞 차량과의 거리를 측정하는데 도움이 됩니다
+                    차량에 장착되어있는 레이더는 선행차량과의 거리를 측정하는데 도움이 됩니다
                 </X.Text>
                 <X.Text
                     size='small' color='white' weight='light'
                     style={ Styles.onboardingStepContextSmaller }>
-                    이 표시기는 앞차량에 대한 상대적인 속도를 설명하기 위해 빨간색 또는 노란색 중 하나를 나타냅니다
+                    이 표시기는 선행차량에 대한 상대적인 속도를 빨간색 또는 노란색 으로 나타냅니다
                 </X.Text>
                 <X.Button color='ghost'
                     style={ Styles.onboardingStepPointInstruction }
@@ -513,7 +513,7 @@ class Onboarding extends Component {
                     <X.Text
                         size='small' color='white' weight='semibold'
                         style={ Styles.onboardingStepPointInstructionText }>
-                        앞차량 표시기를 선택하세요
+                        선행차량 표시기를 선택하세요
                     </X.Text>
                     <X.Image
                         source={ require('../../../img/icon_chevron_right.png') }
@@ -597,7 +597,7 @@ class Onboarding extends Component {
                 <X.Text
                     size='small' color='white' weight='light'
                     style={ Styles.onboardingStepContextSmaller }>
-                    편안한 속도로 오픈파일럿을 작동할 준비가 되면 핸들에서 크루즈 컨트롤을 찾고 "SET"을 눌러 시작하십시오                    
+                    오픈파일럿을 작동할 준비가 되면 핸들에서 크루즈 버튼과 "SET"을 눌러 시작하십시오
                 </X.Text>
                 <X.Button color='ghost'
                     style={ Styles.onboardingStepPointInstruction }
@@ -626,7 +626,7 @@ class Onboarding extends Component {
                         size='small' color='ghost' textWeight='light'
                         style={ Styles.onboardingStepPointCrumb }
                         onPress={ () => this.handleEngageRadioPressed('index') }>
-                        오픈파일럿 활성화후
+                        운전자 모니터링
                     </X.Button>
                     <X.Text size='medium' color='white' weight='bold'>
                         운전자 모니터링
@@ -634,7 +634,7 @@ class Onboarding extends Component {
                     <X.Text
                         size='small' color='white' weight='light'
                         style={ Styles.onboardingStepContextSmaller }>
-                        오픈파일럿이 활성화될때는 항상 주의를 기울여야 합니다. 오픈파일럿은 3D 안면 재구성및 포즈로 인지도를 모니터링합니다. 운전자 주의 경고된후 수정될 때까지 오픈파일럿이 해제됩니다
+                        오픈파일럿이 활성화이후에는 항상 도로상황을 주시해야합니다. 오픈파일럿은 3D 안면 재구성및 포즈로 인지도를 모니터링합니다. 운전자의 전방주시 상태가 불안하면 오픈파일럿은 경보와함께 해제됩니다.
                     </X.Text>
                     <X.Button color='ghost'
                         style={ Styles.onboardingStepPointInstruction }
@@ -674,12 +674,12 @@ class Onboarding extends Component {
                 </View>
                 <View style={ Styles.onboardingStepPointBody }>
                     <X.Text size='bigger' color='white' weight='bold'>
-                        오픈파일럿은 당신의 도움으로 차선을 바꿀 수 있습니다
+                        오픈파일럿은 운전자의 도움으로 차선변경을 수행합니다
                     </X.Text>
                     <X.Text
                         size='smallish' color='white' weight='light'
                         style={ Styles.onboardingStepContextSmall }>
-                        오픈파일럿은 차선변경이 안전한지 확인할 수 없습니다. 그러므로 운전자의 주의가 필요합니다. BSD가 없으면 오픈파일럿은 다른 차량이 있는지 여부에 관계없이 차선이 변경될수 있습니다
+                        오픈파일럿은 차선상태가 안전한지 확인할수 없으니 후측방 감지기가 장착되어있지않은 차량이라면 다른 차량이 있는지 여부에 관계없이 차선이 변경될수 있으니 운전자의 주의가 필요합니다.
                     </X.Text>
                     <X.RadioField
                         size='big'
@@ -712,7 +712,7 @@ class Onboarding extends Component {
                         size='small' color='ghost' textWeight='light'
                         style={ Styles.onboardingStepPointCrumb }
                         onPress={ () => this.handleLaneChangeRadioPressed('index') }>
-                        오픈파일럿 컨트롤
+                        오픈파일럿 차선변경
                     </X.Button>
                     <X.Text size='medium' color='white' weight='bold'>
                         차선변경 시작
@@ -720,7 +720,7 @@ class Onboarding extends Component {
                     <X.Text
                         size='small' color='white' weight='light'
                         style={ Styles.onboardingStepContextSmaller }>
-                        오픈파일럿이 활성화된 상태에서 방향지시등을 커고 주변 환경을 확인하고 차선을 변경해도 안전한지 확인하세요
+                        오픈파일럿 활성화 이후 변경할 차선상태를 확인하고 방향지시등을 조작하여 차선을 변경하세요.
                     </X.Text>
                     <X.Button color='ghost'
                         style={ Styles.onboardingStepPointInstruction }
@@ -758,7 +758,7 @@ class Onboarding extends Component {
                     <X.Text
                         size='small' color='white' weight='light'
                         style={ Styles.onboardingStepContextSmaller }>
-                        핸들을 원하는 차선으로 부드럽게 밀어내고 주변 안전을 지속적으로 관찰하세요. 방향지시신호와 핸들조향의 조합으로 오픈파일럿이 차선을 변경하도록 유도할 것입니다
+                        핸들을 원하는 차선으로 조작하고 차선상태를 지속적으로 확인하세요. 방향지시신호와 핸들조향의 조합으로 오픈파일럿이 차선을 변경하도록 유도합니다.
                     </X.Text>
                     <X.Button color='ghost'
                         style={ Styles.onboardingStepPointInstruction }
@@ -803,7 +803,7 @@ class Onboarding extends Component {
                     <X.Text
                         size='smallish' color='white' weight='light'
                         style={ Styles.onboardingStepContextSmall }>
-                        잠재적으로 안전하지 않은 상황에 부딪히거나 고속도로를 빠져나갈 때, 브레이크를 밟으면 해제할수 있습니다
+                        오픈파일럿 활성화 이후 주행중 브레이크를 조작하면 오픈파일럿이 해제됩니다.
                     </X.Text>
                     <X.RadioField
                         size='big'
@@ -819,7 +819,7 @@ class Onboarding extends Component {
                         isChecked={ stepChecks.includes('disengage') }
                         hasAppend={ true }
                         onPress={ () => this.handleDisengageRadioPressed('disengage') }
-                        label='차선변경 수행' />
+                        label='오픈파일럿 해제' />
                 </View>
             </View>
         )
@@ -836,7 +836,7 @@ class Onboarding extends Component {
                         size='small' color='ghost' textWeight='light'
                         style={ Styles.onboardingStepPointCrumb }
                         onPress={ () => this.handleDisengageRadioPressed('index') }>
-                        오픈파일럿 해제
+                        제한된 기능
                     </X.Button>
                     <X.Text size='medium' color='white' weight='bold'>
                         제한된 기능
@@ -844,7 +844,7 @@ class Onboarding extends Component {
                     <X.Text
                         size='small' color='white' weight='light'
                         style={ Styles.onboardingStepContextSmaller }>
-                        어떤 상황은 오픈파일럿에 의해 처리되지 않는다는 것을 명심하세요. 신호등, 정지표지판, 차량 차단기 및 보행자와 같은 경우는 인식되지않고 오픈파일럿이 가속될 수 있습니다
+                        어떤 상황은 오픈파일럿에 의해 처리되지 않는다는 것을 명심하세요. 신호등, 정지표지판, 차량 차단기 및 보행자와 같은 경우는 차량으로 인식되지않고 오픈파일럿이 가속될 수 있습니다.
                     </X.Text>
                     <X.Button color='ghost'
                         style={ Styles.onboardingStepPointInstruction }
@@ -882,7 +882,7 @@ class Onboarding extends Component {
                     <X.Text
                         size='small' color='white' weight='light'
                         style={ Styles.onboardingStepContextSmaller }>
-                        오픈파일럿이 작동 중일 때, 핸들을 조향하기 위해 손을 핸들에 대고 있을 수 있습니다. 핸들 조향 제어는 브레이크를 밟아 해제할 때까지 오픈파일럿에 의해 관리됩니다
+                        오픈파일럿 활성화 전후에는 안전을 위해 항상 핸들을 잡고 도로상황을 주시해야합니다.
                     </X.Text>
                     <X.Button color='ghost'
                         style={ Styles.onboardingStepPointInstruction }
@@ -931,14 +931,13 @@ class Onboarding extends Component {
                 <X.Text
                     size='jumbo' color='white' weight='bold'
                     style={ Styles.onboardingStepHeader }>
-                    Congratulations! You have completed openpilot training.
+                    축하합니다! 당신은 오픈파일럿 트레이닝을 완료했습니다.
                 </X.Text>
                 <X.Text
                     color='white' weight='light'
                     style={ Styles.onboardingStepContextSmaller }>
-                    This guide can be replayed at any time from the
-                    device settings. To learn more about openpilot, read the
-                    wiki and join the community at discord.comma.ai
+                    트레이닝 가이드는 설정메뉴에서 언제든지 다시볼수 있습니다.
+                    추가정보를 확인하시려면 discord 나 comma.ai wiki를 확인하세요.
                 </X.Text>
                 <X.Line color='transparent' spacing='small' />
                 <View style={ Styles.onboardingActionsRow }>
@@ -954,7 +953,7 @@ class Onboarding extends Component {
                             color='setupInverted'
                             textColor='white'
                             onPress={ this.handleRestartPressed }>
-                            트레이닝 다시보기
+                            다시보기
                         </X.Button>
                     </View>
                 </View>

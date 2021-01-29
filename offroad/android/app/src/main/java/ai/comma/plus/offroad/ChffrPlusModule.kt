@@ -53,7 +53,7 @@ class ChffrPlusModule(val ctx: ReactApplicationContext) :
         TETHERING_SETTINGS(2),
         CELLULAR_SETTINGS(3),
         DATE_SETTINGS(4),
-        ANDROID_SETTINGS(5)            
+        ANDROID_SETTINGS(5)
     }
     private var networkMonitor: NetworkMonitor? = null
     private var thermalPoller: ThermalPoller? = null
@@ -196,7 +196,7 @@ class ChffrPlusModule(val ctx: ReactApplicationContext) :
         intent.putExtra("extra_prefs_show_button_bar", true)
         startActivityWithIntent(intent, ActivityRequestCode.BLUETOOTH_SETTINGS.code)
     }
- 
+
     @ReactMethod
     fun openTetheringSettings() {
         val intent = Intent("android.intent.action.MAIN")
@@ -204,14 +204,14 @@ class ChffrPlusModule(val ctx: ReactApplicationContext) :
         intent.putExtra("extra_prefs_show_button_bar", true)
         startActivityWithIntent(intent, ActivityRequestCode.TETHERING_SETTINGS.code)
     }
-                
+
     @ReactMethod
     fun openAndroidSettings() {
         val intent = Intent("android.intent.action.MAIN")
         intent.component = ComponentName("com.android.settings", "com.android.settings.Settings")
         intent.putExtra("extra_prefs_show_button_bar", true)
         startActivityWithIntent(intent, ActivityRequestCode.ANDROID_SETTINGS.code)
-    }                                
+    }
 
     @ReactMethod
     fun openCellularSettings() {
@@ -287,16 +287,25 @@ class ChffrPlusModule(val ctx: ReactApplicationContext) :
             CloudLog.exception("BaseUIReactModule.shutdown", e)
         }
     }
-        
+
     @ReactMethod
     fun updatePandaFirmware() {
         try {
             Runtime.getRuntime().exec(arrayOf("/system/bin/su", "-c", "sh /data/openpilot/panda_flashing.sh"))
         } catch (e: IOException) {
-            CloudLog.exception("BaseUIReactModule.updatePanda", e)
+            CloudLog.exception("BaseUIReactModule.updatePandaFirmware", e)
         }
     }
-                
+
+    @ReactMethod
+    fun updateAddFunc() {
+        try {
+            Runtime.getRuntime().exec(arrayOf("/system/bin/su", "-c", "sh /data/openpilot/addfunc.sh"))
+        } catch (e: IOException) {
+            CloudLog.exception("BaseUIReactModule.updateAddFunc", e)
+        }
+    }
+
     @ReactMethod
     fun processGitPullandReboot() {
         try {
@@ -306,7 +315,7 @@ class ChffrPlusModule(val ctx: ReactApplicationContext) :
             CloudLog.exception("BaseUIReactModule.shutdown", e)
         }
     }
-                              
+
     @ReactMethod
     fun getSimState(promise: Promise) {
         promise.resolve(getCellState())

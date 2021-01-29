@@ -259,13 +259,13 @@ class Home extends Component {
                                     color='white'
                                     size='jumbo'
                                     weight='semibold'>
-                                    네트워크 연결되지않음
+                                    Enjoy easy driving ~~
                                 </X.Text>
                                 <X.Text
                                     color='lightGrey700'
                                     size='medium'
                                     style={ Styles.homeBodyDisconnectedContext }>
-                                    주행영상을 업로드하려면 네트워크에 연결하세요{'\n'} {'\n'} Easy Driving !!{'\n'}한글화 : 로웰 ( crwusiz )
+                                    항상 핸들을 잡고 도로를 주시하세요{'\n'}{'\n'}한글화 : 로웰 ( crwusiz )
                                 </X.Text>
                             </View>
                         </View>
@@ -310,7 +310,7 @@ class Home extends Component {
                                           color='lightGrey700'
                                           size='tiny'
                                           style={ Styles.homeBodyStatLabel }>
-                                          { isMetric ? 'KM' : 'MILES' }
+                                          { isMetric ? 'km' : 'MILES' }
                                       </X.Text>
                                   </View>
                                   <View style={ Styles.homeBodyStat }>
@@ -370,7 +370,7 @@ class Home extends Component {
                                           color='lightGrey700'
                                           size='tiny'
                                           style={ Styles.homeBodyStatLabel }>
-                                          { isMetric ? 'KM' : 'MILES' }
+                                          { isMetric ? 'km' : 'MILES' }
                                       </X.Text>
                                   </View>
                                   <View style={ Styles.homeBodyStat }>

@@ -147,52 +147,60 @@ class Settings extends Component {
         ]);
     }
 
-    handlePressedUpdatePanda = async () => {
+    handlePressedUpdatePandaFirmware = async () => {
         Alert.alert('판다 펌웨어 플래싱', '판다 펌웨어 플래싱을 실행합니다. 플래싱이 완료되면 재부팅됩니다.', [
             { text: '취소', onPress: () => {}, style: 'cancel' },
             { text: '실행', onPress: () => ChffrPlus.updatePandaFirmware() },
         ]);
     }
 
-    // handleChangedSpeedLimitOffset(operator) {
-    //     const { speedLimitOffset, isMetric } = this.props;
-    //     let _speedLimitOffset;
-    //     let _speedLimitOffsetInt;
-    //     switch (operator) {
-    //       case 'increment':
-    //           if (isMetric) {
-    //               _speedLimitOffset = kphToMps(Math.max(Math.min(speedLimitOffsetInt + 1, 25), -15));
-    //               _speedLimitOffsetInt = Math.round(mpsToKph(_speedLimitOffset));
-    //           } else {
-    //               _speedLimitOffset = mphToMps(Math.max(Math.min(speedLimitOffsetInt + 1, 15), -10));
-    //               _speedLimitOffsetInt = Math.round(mpsToMph(_speedLimitOffset));
-    //           }
-    //           break;
-    //       case 'decrement':
-    //           if (isMetric) {
-    //               _speedLimitOffset = kphToMps(Math.max(Math.min(speedLimitOffsetInt - 1, 25), -15));
-    //               _speedLimitOffsetInt = Math.round(mpsToKph(_speedLimitOffset));
-    //           } else {
-    //               _speedLimitOffset = mphToMps(Math.max(Math.min(speedLimitOffsetInt - 1, 15), -10));
-    //               _speedLimitOffsetInt = Math.round(mpsToMph(_speedLimitOffset));
-    //           }
-    //           break;
-    //     }
-    //     this.setState({ speedLimitOffsetInt: _speedLimitOffsetInt });
-    //     this.props.setSpeedLimitOffset(_speedLimitOffset);
-    // }
+    handlePressedUpdateAddFunc = async () => {
+        Alert.alert('추가기능', '순정기능 이외에 추가기능을 적용합니다.', [
+            { text: '취소', onPress: () => {}, style: 'cancel' },
+            { text: '실행', onPress: () => ChffrPlus.updateAddFunc() },
+        ]);
+    }
 
-    // handleChangedIsMetric() {
-    //     const { isMetric, speedLimitOffset } = this.props;
-    //     const { speedLimitOffsetInt } = this.state;
-    //     if (isMetric) {
-    //         this.setState({ speedLimitOffsetInt: parseInt(mpsToMph(speedLimitOffset)) })
-    //         this.props.setMetric(false);
-    //     } else {
-    //         this.setState({ speedLimitOffsetInt: parseInt(mpsToKph(speedLimitOffset)) })
-    //         this.props.setMetric(true);
-    //     }
-    // }
+/*     handleChangedSpeedLimitOffset(operator) {
+         const { speedLimitOffset, isMetric } = this.props;
+         let _speedLimitOffset;
+         let _speedLimitOffsetInt;
+         switch (operator) {
+           case 'increment':
+               if (isMetric) {
+                   _speedLimitOffset = kphToMps(Math.max(Math.min(speedLimitOffsetInt + 1, 25), -15));
+                   _speedLimitOffsetInt = Math.round(mpsToKph(_speedLimitOffset));
+               } else {
+                   _speedLimitOffset = mphToMps(Math.max(Math.min(speedLimitOffsetInt + 1, 15), -10));
+                   _speedLimitOffsetInt = Math.round(mpsToMph(_speedLimitOffset));
+               }
+               break;
+           case 'decrement':
+               if (isMetric) {
+                   _speedLimitOffset = kphToMps(Math.max(Math.min(speedLimitOffsetInt - 1, 25), -15));
+                   _speedLimitOffsetInt = Math.round(mpsToKph(_speedLimitOffset));
+               } else {
+                   _speedLimitOffset = mphToMps(Math.max(Math.min(speedLimitOffsetInt - 1, 15), -10));
+                   _speedLimitOffsetInt = Math.round(mpsToMph(_speedLimitOffset));
+               }
+               break;
+         }
+         this.setState({ speedLimitOffsetInt: _speedLimitOffsetInt });
+         this.props.setSpeedLimitOffset(_speedLimitOffset);
+     }
+
+     handleChangedIsMetric() {
+         const { isMetric, speedLimitOffset } = this.props;
+         const { speedLimitOffsetInt } = this.state;
+         if (isMetric) {
+             this.setState({ speedLimitOffsetInt: parseInt(mpsToMph(speedLimitOffset)) })
+             this.props.setMetric(false);
+         } else {
+             this.setState({ speedLimitOffsetInt: parseInt(mpsToKph(speedLimitOffset)) })
+             this.props.setMetric(true);
+         }
+    }
+*/
 
     renderSettingsMenu() {
         const {
@@ -215,7 +223,7 @@ class Settings extends Component {
         const settingsMenuItems = [
             {
                 icon: Icons.user,
-                title: '계정',
+                title: '설정',
                 context: isPaired ? '페어링됨' : '페어링안됨',
                 route: SettingsRoutes.ACCOUNT,
             },
@@ -346,6 +354,9 @@ class Settings extends Component {
                             isExpanded={ expandedCell == 'ldw' }
                             handleExpanded={ () => this.handleExpanded('ldw') }
                             handleChanged={ this.props.setLaneDepartureWarningEnabled } />
+                      </X.Table>
+
+                      {/*
                         <X.TableCell
                             type='switch'
                             title='운전자 모니터링 기록 사용'
@@ -356,7 +367,6 @@ class Settings extends Component {
                             handleExpanded={ () => this.handleExpanded('record_front') }
                             handleChanged={ this.props.setRecordFront } />
                       </X.Table>
-                      {/*
                         <X.TableCell
                             type='switch'
                             title='우측 핸들 사용'
@@ -413,6 +423,7 @@ class Settings extends Component {
                             handleChanged={ this.props.setLimitSetSpeed } />
                     </X.Table>
                     */}
+
                     <X.Table color='darkBlue'>
                         <X.Button
                             color='settingsDefault'
@@ -425,6 +436,7 @@ class Settings extends Component {
         )
     }
 
+
     renderAccountSettings() {
         const { isPaired } = this.props;
         const { expandedCell } = this.state;
@@ -435,13 +447,34 @@ class Settings extends Component {
                         color='ghost'
                         size='small'
                         onPress={ () => this.handlePressedBack() }>
-                        {'<  계정 설정'}
+                        {'<  안드로이드 설정'}
                     </X.Button>
                 </View>
                 <ScrollView
                     ref="settingsScrollView"
                     style={ Styles.settingsWindow }>
-                    <View>
+                    <X.Line color='transparent' spacing='tiny' />
+                    <X.Table spacing='big' color='darkBlue'>
+                        <X.Button
+                            size='small'
+                            color='settingsDefault'
+                            onPress={ () => this.props.reboot() }>
+                            시스템 재부팅
+                        </X.Button>
+                        <X.Line color='transparent' size='tiny' spacing='mini' />
+                        <X.Button
+                            size='small'
+                            color='settingsDefault'
+                            onPress={ () => this.props.shutdown() }>
+                            시스템 종료
+                        </X.Button>
+                    </X.Table>
+                </ScrollView>
+            </View>
+        )
+    }
+
+/*
                         <X.Table>
                             <X.TableCell
                                 title='장치 페어링 상태'
@@ -470,11 +503,8 @@ class Settings extends Component {
                                 </X.Button>
                             </X.Table>
                         ) }
-                    </View>
-                </ScrollView>
-            </View>
-        )
-    }
+*/
+
 
     calib_description(params){
       var text = '오픈파일럿은 장치를 왼쪽,오른쪽은 4˚ 이내에 장착하고 위,아래는 5˚ 이내에 장착해야 합니다. 오픈파일럿이 계속 보정 중이므로 재설정이 필요한 경우는 처음 셋팅 이외에는 거의 없습니다.';
@@ -507,9 +537,9 @@ class Settings extends Component {
         const { expandedCell } = this.state;
         const {
             serialNumber,
-            txSpeedKbps,
-            freeSpace,
-            isPaired,
+//            txSpeedKbps,
+//            freeSpace,
+//            isPaired,
             params: {
                 DongleId: dongleId,
                 Passive: isPassive,
@@ -564,21 +594,7 @@ class Settings extends Component {
                             </X.Button>
                         </X.TableCell>
                     </X.Table>
-                    <X.Table color='darkBlue'>
-                        <X.Button
-                            size='small'
-                            color='settingsDefault'
-                            onPress={ () => this.props.reboot() }>
-                            시스템 재부팅
-                        </X.Button>
-                        <X.Line color='transparent' size='tiny' spacing='mini' />
-                        <X.Button
-                            size='small'
-                            color='settingsDefault'
-                            onPress={ () => this.props.shutdown() }>
-                            시스템 종료
-                        </X.Button>
-                    </X.Table>
+
                     <X.Table>
                         <X.TableCell
                             title='장치 ID'
@@ -623,7 +639,7 @@ class Settings extends Component {
                             onPress={ this.props.openWifiSettings }>
                             Wifi 설정
                         </X.Button>
-                        {/*
+{/*
                         <X.Line color='transparent' size='tiny' spacing='mini' />
                         <X.Button
                             size='small'
@@ -631,7 +647,7 @@ class Settings extends Component {
                             onPress={ this.props.openTetheringSettings }>
                             테더링 설정
                         </X.Button>
-                        */}
+*/}
                         <X.Line color='transparent' size='tiny' spacing='mini' />
                         <X.Button
                             size='small'
@@ -805,8 +821,14 @@ class Settings extends Component {
                         <X.Button
                             size='small'
                             color='settingsDefault'
-                            onPress={ this.handlePressedUpdatePanda  }>
+                            onPress={ this.handlePressedUpdatePandaFirmware  }>
                             판다 펌웨어 플래싱
+                        </X.Button>
+                        <X.Button
+                            size='small'
+                            color='settingsDefault'
+                            onPress={ this.handlePressedUpdateAddFunc  }>
+                            추가기능 적용
                         </X.Button>
                     </X.Table>
                     <X.Table color='darkBlue' padding='big'>
@@ -953,7 +975,7 @@ const mapStateToProps = state => ({
     serialNumber: state.host.serial,
     simState: state.host.simState,
     wifiState: state.host.wifiState,
-    isPaired: state.host.device && state.host.device.is_paired,
+//    isPaired: state.host.device && state.host.device.is_paired,
     isOffroad: state.host.isOffroad,
 
     // Uploader
@@ -969,17 +991,17 @@ const mapDispatchToProps = dispatch => ({
         await dispatch(resetToLaunch());
         await Layout.goBack();
     },
-    openPairing: () => {
-        dispatch(NavigationActions.navigate({ routeName: 'SetupQr' }));
-    },
+//    openPairing: () => {
+//        dispatch(NavigationActions.navigate({ routeName: 'SetupQr' }));
+//    },
     openWifiSettings: async () => {
         await dispatch(NavigationActions.navigate({ routeName: 'SettingsWifi' }));
         Layout.emitSidebarCollapsed();
     },
-    openTetheringSettings: async () => {
-        Layout.emitSidebarCollapsed();
-        ChffrPlus.openTetheringSettings();
-    },
+//    openTetheringSettings: async () => {
+//        Layout.emitSidebarCollapsed();
+//        ChffrPlus.openTetheringSettings();
+//    },
     openAndroidSettings: async () => {
         Layout.emitSidebarCollapsed();
         ChffrPlus.openAndroidSettings();
