@@ -50,6 +50,7 @@ const PARAMS = [
   "IsRHD",
   "PutPrebuilt",
   "LdwsMfc",
+  "DisableLogger",
 ].concat(ALERT_PARAMS);
 
 export function refreshParams(params) {

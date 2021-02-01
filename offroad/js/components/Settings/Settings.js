@@ -54,6 +54,7 @@ const Icons = {
     discord: require('../../img/icon_discord.png'),
     prebuilt: require('../../img/icon_prebuilt.png'),
     ldwsmfc: require('../../img/icon_ldwsmfc.png'),
+    disablelogger: require('../../img/icon_disablelogger.png'),
 }
 
 class Settings extends Component {
@@ -337,7 +338,7 @@ class Settings extends Component {
                         { !parseInt(isPassive) ? (
                             <X.TableCell
                                 type='switch'
-                                title='차선변경 사용'
+                                title='차선변경 보조 사용'
                                 value={ !!parseInt(laneChangeEnabled) }
                                 iconSource={ Icons.road }
                                 description='60km 이상의 속도로 주행시 방향지시등을 켜고 핸들을 원하는 차선 쪽으로 부드럽게 돌려주면 오픈파일럿이 차선변경을 수행합니다.'
@@ -347,7 +348,7 @@ class Settings extends Component {
                         ) : null }
                         <X.TableCell
                             type='switch'
-                            title='차선이탈경보 사용'
+                            title='차선이탈 경보 사용'
                             value={ !!parseInt(isLaneDepartureWarningEnabled) }
                             iconSource={ Icons.ldws }
                             description='방향지시등 조작없이 차량이 차선을 이탈하면 차선이탈경보를 보냅니다'
@@ -679,6 +680,7 @@ class Settings extends Component {
                 AutoLaneChangeEnabled: autoLaneChangeEnabled,
                 PutPrebuilt: putPrebuilt,
                 LdwsMfc: ldwsMfc,
+                DisableLogger: disableLogger,
             },
         } = this.props;
         const { expandedCell, gitPullOnProgress } = this.state;
@@ -779,6 +781,15 @@ class Settings extends Component {
                                     handleExpanded={ () => this.handleExpanded('autoLaneChange_enabled') }
                                     handleChanged={ this.props.setAutoLaneChangeEnabled } />
                             ) : null }
+                        <X.TableCell
+                            type='switch'
+                            title='Logger 사용안함'
+                            value={ !!parseInt(disableLogger) }
+                            iconSource={ Icons.disablelogger }
+                            description='Logger 관련된 프로세스를 사용안함으로 설정하여 CPU 부하를 줄입니다.'
+                            isExpanded={ expandedCell == 'disableLogger' }
+                            handleExpanded={ () => this.handleExpanded('disableLogger') }
+                            handleChanged={ this.props.setDisableLogger } />
                         <X.TableCell
                             type='switch'
                             title='LDWS MFC 카메라 사용'
@@ -1083,6 +1094,9 @@ const mapDispatchToProps = dispatch => ({
     },
     setAutoLaneChangeEnabled: (autoLaneChangeEnabled) => {
         dispatch(updateParam(Params.KEY_AUTO_LANE_CHANGE_ENABLED, (autoLaneChangeEnabled | 0).toString()));
+    },
+    setDisableLogger: (disableLogger) => {
+        dispatch(updateParam(Params.KEY_DISABLE_LOGGER, (disableLogger | 0).toString()));
     },
     setLdwsMfc: (ldwsMfc) => {
         dispatch(updateParam(Params.KEY_LDWS_MFC, (ldwsMfc | 0).toString()));
