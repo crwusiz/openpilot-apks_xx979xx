@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { ActivityIndicator, Alert, ScrollView, TextInput, View } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
-
 import ChffrPlus from '../../native/ChffrPlus';
 import Layout from '../../native/Layout';
 import UploadProgressTimer from '../../timers/UploadProgressTimer';
@@ -10,16 +9,8 @@ import { formatSize } from '../../utils/bytes';
 import { mpsToKph, mpsToMph, kphToMps, mphToMps } from '../../utils/conversions';
 import { Params } from '../../config';
 import { resetToLaunch } from '../../store/nav/actions';
-
-import {
-    updateSshEnabled,
-} from '../../store/host/actions';
-import {
-    deleteParam,
-    updateParam,
-    refreshParams,
-} from '../../store/params/actions';
-
+import { updateSshEnabled } from '../../store/host/actions';
+import { deleteParam, updateParam, refreshParams } from '../../store/params/actions';
 import X from '../../themes';
 import Styles from './SettingsStyles';
 
@@ -64,7 +55,6 @@ class Settings extends Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             route: SettingsRoutes.PRIMARY,
             expandedCell: null,
@@ -78,7 +68,6 @@ class Settings extends Component {
             githubUsername: '',
             authKeysUpdateState: null,
         }
-
         this.writeSshKeys = this.writeSshKeys.bind(this);
         this.toggleExpandGithubInput = this.toggleExpandGithubInput.bind(this);
     }
@@ -92,7 +81,6 @@ class Settings extends Component {
                 SpeedLimitOffset: speedLimitOffset
             },
         } = this.props;
-
         if (isMetric) {
             this.setState({ speedLimitOffsetInt: parseInt(mpsToKph(speedLimitOffset)) })
         } else {
@@ -222,25 +210,30 @@ class Settings extends Component {
             {
                 icon: Icons.user,
                 title: '시스템',
-                context: isPaired ? '페어링됨' : '페어링안됨',
+                context: ``,
+//                context: isPaired ? '페어링됨' : '페어링안됨',
                 route: SettingsRoutes.ACCOUNT,
             },
             {
                 icon: Icons.eon,
                 title: '장치',
-                context: `${ parseInt(freeSpace) + '%' } 여유`,
+                context: ``,
+//                context: `${ parseInt(freeSpace) + '%' }`,
                 route: SettingsRoutes.DEVICE,
             },
             {
                 icon: Icons.network,
                 title: 'wifi',
+//                context: ``,
                 context: connectivity,
                 route: SettingsRoutes.NETWORK,
             },
             {
                 icon: Icons.developer,
                 title: '개발자',
-                context: `${ software } v${ version.split('-')[0] }`,
+//                context: ``,
+//                context: `v${ version.split('-')[0] }`,
+                context: `v${ version }`,
                 route: SettingsRoutes.DEVELOPER,
             },
         ];
@@ -282,13 +275,6 @@ class Settings extends Component {
     renderPrimarySettings() {
         const {
             params: {
-                //
-                RecordFront: recordFront,
-                IsRHD: isRHD,
-                LimitSetSpeed: limitSetSpeed,
-                SpeedLimitOffset: speedLimitOffset,
-                LongitudinalControl: hasLongitudinalControl,
-                //
                 Passive: isPassive,
                 OpenpilotEnabledToggle: openpilotEnabled,
                 IsMetric: isMetric,
@@ -300,9 +286,17 @@ class Settings extends Component {
                 MadModeEnabled: madModeEnabled,
                 DisableLogger: disableLogger,
                 LdwsMfc: ldwsMfc,
+                //
+                RecordFront: recordFront,
+                IsRHD: isRHD,
+//                LimitSetSpeed: limitSetSpeed,
+//                SpeedLimitOffset: speedLimitOffset,
+//                LongitudinalControl: hasLongitudinalControl,
+                //
             },
         } = this.props;
-        const { expandedCell, speedLimitOffsetInt } = this.state;
+//        const { expandedCell, speedLimitOffsetInt } = this.state;
+        const { expandedCell } = this.state;
         return (
             <View style={ Styles.settings }>
                 <View style={ Styles.settingsHeader }>
@@ -345,7 +339,7 @@ class Settings extends Component {
                             title='커뮤니티기능 사용'
                             value={ !!parseInt(communityFeatures) }
                             iconSource={ Icons.discord }
-                            description='커뮤니티기능은 comma.ai 에서 공식적으로 지원하는 기능이 아니므로 사용시 주의하세요.'
+                            description='커뮤니티기능은 comma.ai에서 공식적으로 지원하는 기능이 아니므로 사용시 주의하세요.'
                             isExpanded={ expandedCell == 'communityFeatures' }
                             handleExpanded={ () => this.handleExpanded('communityFeatures') }
                             handleChanged={ this.props.setCommunityFeatures } />
@@ -364,7 +358,7 @@ class Settings extends Component {
                                 title='차선변경보조 사용'
                                 value={ !!parseInt(laneChangeEnabled) }
                                 iconSource={ Icons.road }
-                                description='60km 이상의 속도로 주행시 방향지시등을 켜고 핸들을 원하는 차선쪽으로 부드럽게 움직여주면 오픈파일럿이 차선변경을 수행합니다.'
+                                description='60km 이상의 속도로 주행시 방향지시등을 켜고 핸들을 이동할 차선쪽으로 부드럽게 움직여주면 오픈파일럿이 차선변경을 수행합니다.'
                                 isExpanded={ expandedCell == 'lanechange_enabled' }
                                 handleExpanded={ () => this.handleExpanded('lanechange_enabled') }
                                 handleChanged={ this.props.setLaneChangeEnabled } />
@@ -522,20 +516,27 @@ class Settings extends Component {
                 <ScrollView
                     ref="settingsScrollView"
                     style={ Styles.settingsWindow }>
-                    <X.Line color='transparent' spacing='tiny' />
                     <X.Table spacing='big' color='darkBlue'>
+                        <X.Line color='transparent' size='tiny' spacing='mini' />
+                        <X.Button
+                            size='small'
+                            color='settingsDefault'
+                            onPress={ () => ChffrPlus.openAndroidSettings() }>
+                            안드로이드 설정
+                        </X.Button>
+                        <X.Line color='transparent' size='tiny' spacing='mini' />
                         <X.Button
                             size='small'
                             color='settingsDefault'
                             onPress={ () => this.props.reboot() }>
-                            시스템 재부팅
+                            재부팅
                         </X.Button>
                         <X.Line color='transparent' size='tiny' spacing='mini' />
                         <X.Button
                             size='small'
                             color='settingsDefault'
                             onPress={ () => this.props.shutdown() }>
-                            시스템 종료
+                            종료
                         </X.Button>
                         <X.Line color='transparent' size='tiny' spacing='mini' />
                         <X.Button
@@ -583,7 +584,7 @@ class Settings extends Component {
 
 
     calib_description(params){
-      var text = '오픈파일럿은 장치를 왼쪽,오른쪽은 4˚ 이내에 장착하고 위,아래는 5˚ 이내에 장착해야 합니다. 오픈파일럿이 계속 보정 중이므로 재설정이 필요한 경우는 처음 셋팅 이외에는 거의 없습니다.';
+      var text = '오픈파일럿은 마운트에 장착시 위와 아래쪽은 5˚이내 그리고 왼쪽과 오른쪽은 4˚이내에 장착해야 합니다. 장착위치가 변경되면 캘리브레이션을 진행하세요.';
       if ((params == null) || (params == undefined)) {
         var calib_json = null
       } else {
@@ -595,16 +596,16 @@ class Settings extends Component {
         var pitch = parseFloat(calibArr[1]) * (180/pi)
         var yaw = parseFloat(calibArr[2]) * (180/pi)
         if (pitch > 0) {
-          var pitch_str = Math.abs(pitch).toFixed(1).concat('˚ 위')
+          var pitch_str = Math.abs(pitch).toFixed(1).concat('˚ 위쪽')
         } else {
-          var pitch_str = Math.abs(pitch).toFixed(1).concat('˚ 아래')
+          var pitch_str = Math.abs(pitch).toFixed(1).concat('˚ 아래쪽')
         }
         if (yaw > 0) {
           var yaw_str = Math.abs(yaw).toFixed(1).concat('˚ 오른쪽에')
         } else {
           var yaw_str = Math.abs(yaw).toFixed(1).concat('˚ 왼쪽에')
         }
-        text = text.concat('\n\n장치가', pitch_str, ' 그리고 ', yaw_str, ' 위치해 있습니다. ')
+        text = text.concat('\n\n장치의 위치는 ', pitch_str, ' 그리고 ', yaw_str, ' 위치해 있습니다. ')
       }
       return text;
     }
@@ -657,7 +658,7 @@ class Settings extends Component {
                             type='custom'
                             title='운전자 모니터링'
                             iconSource={ Icons.monitoring }
-                            description='최상의 운전자 모니터링 환경을 위해 운전자 모니터링 카메라를 미리보고 최적의 장착위치를 찾아보세요.'
+                            description='정확한 운전자 모니터링 환경을 위해 운전자 모니터링 카메라를 미리보고 최적의 장착위치를 찾아보세요.'
                             isExpanded={ expandedCell == 'driver_view_enabled' }
                             handleExpanded={ () => this.handleExpanded('driver_view_enabled') } >
                             <X.Button
@@ -709,7 +710,6 @@ class Settings extends Component {
                 <ScrollView
                     ref="settingsScrollView"
                     style={ Styles.settingsWindow }>
-                    <X.Line color='transparent' spacing='tiny' />
                     <X.Table spacing='big' color='darkBlue'>
                         <X.Button
                             size='small'
@@ -717,13 +717,6 @@ class Settings extends Component {
 //                            onPress={ this.props.openWifiSettings }>
                             onPress={ () => ChffrPlus.openWifiSettings() }>
                             wifi 설정
-                        </X.Button>
-                        <X.Line color='transparent' size='tiny' spacing='mini' />
-                        <X.Button
-                            size='small'
-                            color='settingsDefault'
-                            onPress={ () => ChffrPlus.openAndroidSettings() }>
-                            안드로이드 설정
                         </X.Button>
                     </X.Table>
                 </ScrollView>
@@ -789,8 +782,7 @@ class Settings extends Component {
                             value={ (pandaDongleId != null && pandaDongleId != "unprovisioned") ? pandaDongleId : '연결안됨' }
                             valueTextSize='tiny' />
                     </X.Table>
-
-                    <X.Table color='darkBlue'>
+                    <X.Table spacing='big' color='darkBlue'>
                         <X.TableCell
                             type='switch'
                             title='SSH 접속 사용'
@@ -809,18 +801,21 @@ class Settings extends Component {
                             isExpanded={ expandedCell == 'putPrebuilt' }
                             handleExpanded={ () => this.handleExpanded('putPrebuilt') }
                             handleChanged={ this.props.setPutPrebuilt } />
+                        <X.Line color='transparent' size='tiny' spacing='mini' />
                         <X.Button
                             size='small'
                             color='settingsDefault'
                             onPress={ this.handlePressedUpdatePandaFirmware  }>
                             판다 펌웨어 플래싱
                         </X.Button>
+                        <X.Line color='transparent' size='tiny' spacing='mini' />
                         <X.Button
                             size='small'
                             color='settingsDefault'
                             onPress={ this.handlePressedUpdateGitPull  }>
                             Git Pull
                         </X.Button>
+                        <X.Line color='transparent' size='tiny' spacing='mini' />
                         <X.Button
                             size='small'
                             color='settingsDefault'
@@ -828,7 +823,6 @@ class Settings extends Component {
                             추가기능 적용
                         </X.Button>
                     </X.Table>
-
                     <X.Table color='darkBlue' padding='big'>
                         <X.Button
                             color='settingsDefault'
@@ -958,7 +952,6 @@ class Settings extends Component {
             if (resp.status !== 200) {
                 throw new Error('Non-200 response code from GitHub');
             }
-
             await ChffrPlus.writeParam(Params.KEY_GITHUB_SSH_KEYS, githubKeys);
             this.toggleExpandGithubInput();
         } catch(err) {
@@ -999,11 +992,9 @@ const mapStateToProps = state => ({
     wifiState: state.host.wifiState,
     isPaired: state.host.device && state.host.device.is_paired,
     isOffroad: state.host.isOffroad,
-
     // Uploader
     txSpeedKbps: parseInt(state.uploads.txSpeedKbps),
     freeSpace: state.host.thermal.freeSpace,
-
     params: state.params.params,
 });
 
@@ -1013,47 +1004,36 @@ const mapDispatchToProps = dispatch => ({
         await dispatch(resetToLaunch());
         await Layout.goBack();
     },
-//    openPairing: () => {
-//        dispatch(NavigationActions.navigate({ routeName: 'SetupQr' }));
-//    },
+/*===========================
+    openPairing: () => {
+        dispatch(NavigationActions.navigate({ routeName: 'SetupQr' }));
+    },
+    setHasLongitudinalControl: (hasLongitudinalControl) => {
+        dispatch(updateParam(Params.KEY_HAS_LONGITUDINAL_CONTROL, (hasLongitudinalControl | 0).toString()));
+    },
+    setLimitSetSpeed: (limitSetSpeed) => {
+        dispatch(updateParam(Params.KEY_LIMIT_SET_SPEED, (limitSetSpeed | 0).toString()));
+    },
+    setSpeedLimitOffset: (speedLimitOffset) => {
+        dispatch(updateParam(Params.KEY_SPEED_LIMIT_OFFSET, (speedLimitOffset).toString()));
+    },
+===========================*/
     openWifiSettings: async () => {
 //        await dispatch(NavigationActions.navigate({ routeName: 'SettingsWifi' }));
         Layout.emitSidebarCollapsed();
         ChffrPlus.openWifiSettings();
     },
-//    openTetheringSettings: async () => {
-//        Layout.emitSidebarCollapsed();
-//        ChffrPlus.openTetheringSettings();
-//    },
+    openTetheringSettings: async () => {
+        Layout.emitSidebarCollapsed();
+        ChffrPlus.openTetheringSettings();
+    },
     openAndroidSettings: async () => {
         Layout.emitSidebarCollapsed();
         ChffrPlus.openAndroidSettings();
     },
-    reboot: () => {
-        Alert.alert('재부팅', '재부팅하시겠습니까?', [
-            { text: '취소', onPress: () => {}, style: 'cancel' },
-            { text: '재부팅', onPress: () => ChffrPlus.reboot() },
-        ]);
-    },
-    shutdown: () => {
-        Alert.alert('종료', '종료하시겠습니까?', [
-            { text: '취소', onPress: () => {}, style: 'cancel' },
-            { text: '종료', onPress: () => ChffrPlus.shutdown() },
-        ]);
-    },
-    uninstall: () => {
-        Alert.alert('제거', '제거하시겠습니까?', [
-            { text: '취소', onPress: () => {}, style: 'cancel' },
-            { text: '제거', onPress: () => ChffrPlus.writeParam(Params.KEY_DO_UNINSTALL, "1") },
-        ]);
-    },
     openTrainingGuide: () => {
-        dispatch(NavigationActions.reset({
-            index: 0,
-            key: null,
-            actions: [
-                NavigationActions.navigate({ routeName: 'Onboarding' })
-            ]
+        dispatch(NavigationActions.reset({index: 0, key: null, actions: [
+                NavigationActions.navigate({ routeName: 'Onboarding' })]
         }))
     },
     setOpenpilotEnabled: (openpilotEnabled) => {
@@ -1073,15 +1053,6 @@ const mapDispatchToProps = dispatch => ({
     },
     setSshEnabled: (isSshEnabled) => {
         dispatch(updateSshEnabled(!!isSshEnabled));
-    },
-    setHasLongitudinalControl: (hasLongitudinalControl) => {
-        dispatch(updateParam(Params.KEY_HAS_LONGITUDINAL_CONTROL, (hasLongitudinalControl | 0).toString()));
-    },
-    setLimitSetSpeed: (limitSetSpeed) => {
-        dispatch(updateParam(Params.KEY_LIMIT_SET_SPEED, (limitSetSpeed | 0).toString()));
-    },
-    setSpeedLimitOffset: (speedLimitOffset) => {
-        dispatch(updateParam(Params.KEY_SPEED_LIMIT_OFFSET, (speedLimitOffset).toString()));
     },
     setCommunityFeatures: (communityFeatures) => {
         dispatch(updateParam(Params.KEY_COMMUNITY_FEATURES, (communityFeatures | 0).toString()));
@@ -1123,6 +1094,24 @@ const mapDispatchToProps = dispatch => ({
     },
     refreshParams: () => {
         dispatch(refreshParams());
+    },
+    reboot: () => {
+        Alert.alert('재부팅', '재부팅하시겠습니까?', [
+            { text: '취소', onPress: () => {}, style: 'cancel' },
+            { text: '재부팅', onPress: () => ChffrPlus.reboot() },
+        ]);
+    },
+    shutdown: () => {
+        Alert.alert('종료', '종료하시겠습니까?', [
+            { text: '취소', onPress: () => {}, style: 'cancel' },
+            { text: '종료', onPress: () => ChffrPlus.shutdown() },
+        ]);
+    },
+    uninstall: () => {
+        Alert.alert('제거', '제거하시겠습니까?', [
+            { text: '취소', onPress: () => {}, style: 'cancel' },
+            { text: '제거', onPress: () => ChffrPlus.writeParam(Params.KEY_DO_UNINSTALL, "1") },
+        ]);
     },
 });
 
