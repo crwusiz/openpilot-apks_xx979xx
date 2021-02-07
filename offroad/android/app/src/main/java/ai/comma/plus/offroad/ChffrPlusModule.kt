@@ -255,36 +255,11 @@ class ChffrPlusModule(val ctx: ReactApplicationContext) :
     }
 
     @ReactMethod
-    fun processGitPull() {
+    fun updateGitPull() {
         try {
-            Toast.makeText(ctx, "실행합니다.", Toast.LENGTH_SHORT).show();
-
-            val p1 = Runtime.getRuntime().exec(arrayOf("/system/bin/su", "-c", "LD_LIBRARY_PATH=/data/phonelibs:/data/data/com.termux/files/usr/lib  data/data/com.termux/files/usr/bin/git -C /data/openpilot reset --hard"))
-
-            var reader = BufferedReader(InputStreamReader(p1.inputStream));
-            reader.useLines {
-                it.map { line -> {} }
-            }
-            p1.waitFor();
-
-            val p2 = Runtime.getRuntime().exec(arrayOf("/system/bin/su", "-c", "LD_LIBRARY_PATH=/data/phonelibs:/data/data/com.termux/files/usr/lib  data/data/com.termux/files/usr/bin/git -C /data/openpilot pull"))
-            reader = BufferedReader(InputStreamReader(p2.inputStream));
-            reader.useLines {
-                it.map { line -> {} }
-            }
-            p2.waitFor();
-
-            val p3 = Runtime.getRuntime().exec(arrayOf("/system/bin/su", "-c", "sleep 3"))
-            reader = BufferedReader(InputStreamReader(p3.inputStream));
-            reader.useLines {
-                it.map { line -> {} }
-            }
-            p3.waitFor();
-
-            Toast.makeText(ctx, "완료되었습니다.", Toast.LENGTH_SHORT).show();
-
+            Runtime.getRuntime().exec(arrayOf("/system/bin/su", "-c", "sh /data/openpilot/gitpull.sh"))
         } catch (e: IOException) {
-            CloudLog.exception("BaseUIReactModule.shutdown", e)
+            CloudLog.exception("BaseUIReactModule.updateGitPull", e)
         }
     }
 
@@ -303,16 +278,6 @@ class ChffrPlusModule(val ctx: ReactApplicationContext) :
             Runtime.getRuntime().exec(arrayOf("/system/bin/su", "-c", "sh /data/openpilot/addfunc.sh"))
         } catch (e: IOException) {
             CloudLog.exception("BaseUIReactModule.updateAddFunc", e)
-        }
-    }
-
-    @ReactMethod
-    fun processGitPullandReboot() {
-        try {
-            processGitPull()
-            reboot()
-        } catch (e: IOException) {
-            CloudLog.exception("BaseUIReactModule.shutdown", e)
         }
     }
 
