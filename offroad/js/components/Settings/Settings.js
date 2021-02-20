@@ -186,46 +186,47 @@ class Settings extends Component {
              this.props.setMetric(true);
          }
     }
-===========================*/
 
-    renderSettingsMenu() {
-        const {
-            isPaired,
-            wifiState,
-            simState,
-            freeSpace,
-            params: {
-                Passive: isPassive,
-                Version: version,
-            },
-        } = this.props;
-        const software = !!parseInt(isPassive) ? '대시캠' : '오픈파일럿';
         let connectivity = 'Disconnected'
         if (wifiState.isConnected && wifiState.ssid) {
             connectivity = wifiState.ssid;
         } else if (simState.networkType && simState.networkType != 'NO SIM') {
             connectivity = simState.networkType;
         }
+===========================*/
+
+    renderSettingsMenu() {
+        const {
+            isPaired,
+//            wifiState,
+//            simState,
+//            freeSpace,
+            params: {
+                Passive: isPassive,
+                Version: version,
+            },
+        } = this.props;
+        const software = !!parseInt(isPassive) ? '대시캠' : '오픈파일럿';
         const settingsMenuItems = [
             {
                 icon: Icons.user,
                 title: '시스템',
-                context: ``,
+//                context: ``,
 //                context: isPaired ? '페어링됨' : '페어링안됨',
                 route: SettingsRoutes.ACCOUNT,
             },
             {
                 icon: Icons.eon,
-                title: '장치',
-                context: ``,
+                title: '캘리브레이션',
+//                context: ``,
 //                context: `${ parseInt(freeSpace) + '%' }`,
                 route: SettingsRoutes.DEVICE,
             },
             {
                 icon: Icons.network,
-                title: 'wifi',
+                title: '추가기능',
 //                context: ``,
-                context: connectivity,
+//                context: connectivity,
                 route: SettingsRoutes.NETWORK,
             },
             {
@@ -233,7 +234,7 @@ class Settings extends Component {
                 title: '개발자',
 //                context: ``,
 //                context: `v${ version.split('-')[0] }`,
-                context: `v${ version }`,
+//                context: `v${ version }`,
                 route: SettingsRoutes.DEVELOPER,
             },
         ];
@@ -259,6 +260,15 @@ class Settings extends Component {
                             style={ Styles.settingsMenuItemTitle }>
                             { item.title }
                         </X.Text>
+
+                    </X.Button>
+                </View>
+            )
+        })
+    }
+
+
+/*
                         <X.Text
                             color='white'
                             size='tiny'
@@ -266,37 +276,42 @@ class Settings extends Component {
                             style={ Styles.settingsMenuItemContext }>
                             { item.context }
                         </X.Text>
-                    </X.Button>
-                </View>
-            )
-        })
-    }
 
+*/
+
+
+// primary menu
     renderPrimarySettings() {
         const {
+            wifiState,
             params: {
                 Passive: isPassive,
+                Version: version,                
                 OpenpilotEnabledToggle: openpilotEnabled,
                 IsMetric: isMetric,
+                CommunityFeaturesToggle: communityFeatures,
                 IsLdwEnabled: isLaneDepartureWarningEnabled,
                 LaneChangeEnabled: laneChangeEnabled,
                 AutoLaneChangeEnabled: autoLaneChangeEnabled,
-                CommunityFeaturesToggle: communityFeatures,
                 LongControlEnabled: longControlEnabled,
                 MadModeEnabled: madModeEnabled,
                 DisableLogger: disableLogger,
                 LdwsMfc: ldwsMfc,
-                //
+                /*
                 RecordFront: recordFront,
                 IsRHD: isRHD,
-//                LimitSetSpeed: limitSetSpeed,
-//                SpeedLimitOffset: speedLimitOffset,
-//                LongitudinalControl: hasLongitudinalControl,
-                //
+                LimitSetSpeed: limitSetSpeed,
+                SpeedLimitOffset: speedLimitOffset,
+                LongitudinalControl: hasLongitudinalControl,
+                */
             },
         } = this.props;
 //        const { expandedCell, speedLimitOffsetInt } = this.state;
         const { expandedCell } = this.state;
+        let connectivity = 'Disconnected'
+        if (wifiState.isConnected && wifiState.ssid) {
+            connectivity = wifiState.ssid;
+        }
         return (
             <View style={ Styles.settings }>
                 <View style={ Styles.settingsHeader }>
@@ -304,7 +319,7 @@ class Settings extends Component {
                         color='ghost'
                         size='small'
                         onPress={ () => this.handlePressedBack() }>
-                        {'<  오픈파일럿 설정'}
+                        {'<  오픈파일럿 `v${ version }` 설정'}
                     </X.Button>
                 </View>
                 <ScrollView
@@ -314,6 +329,16 @@ class Settings extends Component {
                         { this.renderSettingsMenu() }
                     </X.Table>
                     <X.Table color='darkBlue'>
+                        <X.Button
+                            size='small'
+                            color='settingsDefault'
+                            onPress={ () => ChffrPlus.openWifiSettings() }>
+                            wifi 설정
+                        <X.TableCell
+                            title='wifi 연결상태'
+                            value={ connectivity }
+                            valueTextSize='tiny' />                            
+                        </X.Button>
                         { !parseInt(isPassive) ? (
                             <X.TableCell
                                 type='switch'
@@ -501,7 +526,7 @@ class Settings extends Component {
 ===========================*/
 
     renderAccountSettings() {
-        const { isPaired } = this.props;
+//        const { isPaired } = this.props;
         const { expandedCell } = this.state;
         return (
             <View style={ Styles.settings }>
@@ -529,21 +554,14 @@ class Settings extends Component {
                             size='small'
                             color='settingsDefault'
                             onPress={ () => this.props.reboot() }>
-                            재부팅
+                            장치 재부팅
                         </X.Button>
                         <X.Line color='transparent' size='tiny' spacing='mini' />
                         <X.Button
                             size='small'
                             color='settingsDefault'
                             onPress={ () => this.props.shutdown() }>
-                            종료
-                        </X.Button>
-                        <X.Line color='transparent' size='tiny' spacing='mini' />
-                        <X.Button
-                            size='small'
-                            color='settingsDefault'
-                            onPress={ () => this.props.openTrainingGuide() }>
-                            트레이닝 가이드 다시보기
+                            장치 종료
                         </X.Button>
                     </X.Table>
                 </ScrollView>
@@ -613,16 +631,13 @@ class Settings extends Component {
     renderDeviceSettings() {
         const { expandedCell } = this.state;
         const {
-            serialNumber,
 //            txSpeedKbps,
-//            freeSpace,
 //            isPaired,
+            isOffroad,
             params: {
                 Passive: isPassive,
                 CalibrationParams: calibrationParams,
-                DongleId: dongleId,
             },
-            isOffroad,
         } = this.props;
         const software = !!parseInt(isPassive) ? '대시캠' : '오픈파일럿';
         return (
@@ -632,7 +647,7 @@ class Settings extends Component {
                         color='ghost'
                         size='small'
                         onPress={ () => this.handlePressedBack() }>
-                        {'<  장치 설정'}
+                        {'<  캘리브레이션 설정'}
                     </X.Button>
                 </View>
                 <ScrollView
@@ -671,25 +686,12 @@ class Settings extends Component {
                             </X.Button>
                         </X.TableCell>
                     </X.Table>
-                    <X.Table spacing='none'>
-                        <X.TableCell
-                            title='장치 ID'
-                            value={ dongleId }
-                            valueTextSize='tiny' />
-                        <X.TableCell
-                            title='시리얼 번호'
-                            value={ serialNumber }
-                            valueTextSize='tiny' />
-                    </X.Table>
                 </ScrollView>
             </View>
         )
     }
 
 /*===========================
-                        <X.TableCell
-                            title='여유 공간'
-                            value={ parseInt(freeSpace) + '%' } />
                         <X.TableCell
                             title='업로드 속도'
                             value={ txSpeedKbps + ' kbps' } />
@@ -697,60 +699,12 @@ class Settings extends Component {
 
     renderNetworkSettings() {
         const { expandedCell } = this.state;
-        return (
-            <View style={ Styles.settings }>
-                <View style={ Styles.settingsHeader }>
-                    <X.Button
-                        color='ghost'
-                        size='small'
-                        onPress={ () => this.handlePressedBack() }>
-                        {'<  wifi 설정'}
-                    </X.Button>
-                </View>
-                <ScrollView
-                    ref="settingsScrollView"
-                    style={ Styles.settingsWindow }>
-                    <X.Table spacing='big' color='darkBlue'>
-                        <X.Button
-                            size='small'
-                            color='settingsDefault'
-//                            onPress={ this.props.openWifiSettings }>
-                            onPress={ () => ChffrPlus.openWifiSettings() }>
-                            wifi 설정
-                        </X.Button>
-                    </X.Table>
-                </ScrollView>
-            </View>
-        )
-    }
-
-/*===========================
-                        <X.Line color='transparent' size='tiny' spacing='mini' />
-                        <X.Button
-                            size='small'
-                            color='settingsDefault'
-                            onPress={ this.props.openTetheringSettings }>
-                            테더링 설정
-                        </X.Button>
-===========================*/
-
-
-    renderDeveloperSettings() {
         const {
-            isSshEnabled,
             params: {
-                Version: version,
                 Passive: isPassive,
-                GitRemote: gitRemote,
-                GitBranch: gitBranch,
-//                GitCommit: gitCommit,
-                PandaFirmwareHex: pandaFirmwareHex,
-                PandaDongleId: pandaDongleId,
                 PutPrebuilt: putPrebuilt,
             },
         } = this.props;
-        const { expandedCell } = this.state;
-        const software = !!parseInt(isPassive) ? '대시캠' : '오픈파일럿';
         return (
             <View style={ Styles.settings }>
                 <View style={ Styles.settingsHeader }>
@@ -758,40 +712,13 @@ class Settings extends Component {
                         color='ghost'
                         size='small'
                         onPress={ () => this.handlePressedBack() }>
-                        {'<  개발자 설정'}
+                        {'<  추가기능 설정'}
                     </X.Button>
                 </View>
                 <ScrollView
                     ref="settingsScrollView"
                     style={ Styles.settingsWindow }>
-                    <X.Table spacing='none'>
-                        <X.TableCell
-                            title='Git Remote'
-                            value={ gitRemote }
-                            valueTextSize='tiny' />
-                        <X.TableCell
-                            title='Git Branch'
-                            value={ gitBranch }
-                            valueTextSize='tiny' />
-                        <X.TableCell
-                            title='판다 펌웨어'
-                            value={ pandaFirmwareHex != null ? pandaFirmwareHex : '연결안됨' }
-                            valueTextSize='tiny' />
-                        <X.TableCell
-                            title='판다 동글 ID'
-                            value={ (pandaDongleId != null && pandaDongleId != "unprovisioned") ? pandaDongleId : '연결안됨' }
-                            valueTextSize='tiny' />
-                    </X.Table>
                     <X.Table spacing='big' color='darkBlue'>
-                        <X.TableCell
-                            type='switch'
-                            title='SSH 접속 사용'
-                            value={ isSshEnabled }
-                            iconSource={ Icons.ssh }
-                            description='SSH를 이용한 장치의 접속을 허용합니다.'
-                            isExpanded={ expandedCell == 'ssh' }
-                            handleExpanded={ () => this.handleExpanded('ssh') }
-                            handleChanged={ this.props.setSshEnabled } />
                         <X.TableCell
                             type='switch'
                             title='prebuilt 파일 생성'
@@ -823,12 +750,122 @@ class Settings extends Component {
                             추가기능 적용
                         </X.Button>
                     </X.Table>
+                </ScrollView>
+            </View>
+        )
+    }
+
+/*===========================
+                        <X.Button
+                            size='small'
+                            color='settingsDefault'
+//                            onPress={ this.props.openWifiSettings }>
+                            onPress={ () => ChffrPlus.openWifiSettings() }>
+                            wifi 설정
+                        <X.Line color='transparent' size='tiny' spacing='mini' />
+                        <X.Button
+                            size='small'
+                            color='settingsDefault'
+                            onPress={ this.props.openTetheringSettings }>
+                            테더링 설정
+                        </X.Button>
+===========================*/
+
+
+    renderDeveloperSettings() {
+        const {
+            serialNumber,
+            isSshEnabled,
+            freeSpace,
+            params: {
+//                Version: version,
+                Passive: isPassive,
+                GitRemote: gitRemote,
+                GitBranch: gitBranch,
+                GitCommit: gitCommit,
+                DongleId: dongleId,
+                PandaFirmwareHex: pandaFirmwareHex,
+                PandaDongleId: pandaDongleId,
+            },
+        } = this.props;
+        const { expandedCell } = this.state;
+        const software = !!parseInt(isPassive) ? '대시캠' : '오픈파일럿';
+        return (
+            <View style={ Styles.settings }>
+                <View style={ Styles.settingsHeader }>
+                    <X.Button
+                        color='ghost'
+                        size='small'
+                        onPress={ () => this.handlePressedBack() }>
+                        {'<  개발자 설정'}
+                    </X.Button>
+                </View>
+                <ScrollView
+                    ref="settingsScrollView"
+                    style={ Styles.settingsWindow }>
+                    <X.Table spacing='big' color='darkBlue'>
+                        <X.TableCell
+                            type='switch'
+                            title='SSH 접속 사용'
+                            value={ isSshEnabled }
+                            iconSource={ Icons.ssh }
+                            description='SSH를 이용한 장치의 접속을 허용합니다.'
+                            isExpanded={ expandedCell == 'ssh' }
+                            handleExpanded={ () => this.handleExpanded('ssh') }
+                            handleChanged={ this.props.setSshEnabled } />
+                    </X.Table>
+                    <X.Table spacing='none'>
+                        <X.TableCell
+                            title='Git Remote'
+                            value={ gitRemote }
+                            valueTextSize='tiny' />
+                        <X.TableCell
+                            title='Git Branch'
+                            value={ gitBranch }
+                            valueTextSize='tiny' />
+                        <X.TableCell
+                            title='Git Commit'
+                            value={ gitCommit.slice(0, 7) }
+                            valueTextSize='tiny' />
+                        <X.TableCell
+                            title='장치 ID'
+                            value={ dongleId }
+                            valueTextSize='tiny' />
+                        <X.TableCell
+                            title='시리얼 번호'
+                            value={ serialNumber }
+                            valueTextSize='tiny' />
+                        <X.TableCell
+                            title='판다 펌웨어'
+                            value={ pandaFirmwareHex != null ? pandaFirmwareHex : '연결안됨' }
+                            valueTextSize='tiny' />
+                        <X.TableCell
+                            title='판다 동글 ID'
+                            value={ (pandaDongleId != null && pandaDongleId != "unprovisioned") ? pandaDongleId : '연결안됨' }
+                            valueTextSize='tiny' />
+                        <X.TableCell
+                            title='여유 공간'
+                            value={ parseInt(freeSpace) + '%' }
+                            valueTextSize='tiny' />
+                        <X.TableCell
+                            title='APK 버전'
+                            value={ crwusiz - 20210222 }
+                            valueTextSize='tiny' />                            
+                    </X.Table>
                     <X.Table color='darkBlue' padding='big'>
+                        <X.Line color='transparent' size='tiny' spacing='mini' />
+                        <X.Button
+                            size='small'
+                            color='settingsDefault'
+                            onPress={ () => this.props.openTrainingGuide() }>
+                            트레이닝 가이드 다시보기
+                        </X.Button>
+                        <X.Line color='transparent' size='tiny' spacing='mini' />
                         <X.Button
                             color='settingsDefault'
                             size='small'
                             onPress={ this.props.uninstall }>
-                            { `${ software } v${ version } 제거` }
+                            { `${ software } 제거` }
                         </X.Button>
                     </X.Table>
                 </ScrollView>
@@ -837,10 +874,7 @@ class Settings extends Component {
     }
 
 /*===========================
-                        <X.TableCell
-                            title='Git Commit'
-                            value={ gitCommit.slice(0, 7) }
-                            valueTextSize='tiny' />
+
 
                         <X.TableCell
                             iconSource={ Icons.developer }
