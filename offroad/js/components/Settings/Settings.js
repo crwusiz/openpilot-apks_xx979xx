@@ -46,6 +46,7 @@ const Icons = {
     prebuilt: require('../../img/icon_prebuilt.png'),
     ldwsmfc: require('../../img/icon_ldwsmfc.png'),
     disablelogger: require('../../img/icon_disablelogger.png'),
+    addon: require('../../img/icon_addon.png'),
 }
 
 class Settings extends Component {
@@ -197,8 +198,8 @@ class Settings extends Component {
 
     renderSettingsMenu() {
         const {
-            isPaired,
-//            wifiState,
+//            isPaired,
+            wifiState,
 //            simState,
 //            freeSpace,
             params: {
@@ -207,26 +208,30 @@ class Settings extends Component {
             },
         } = this.props;
         const software = !!parseInt(isPassive) ? '대시캠' : '오픈파일럿';
+        let connectivity = '-'
+        if (wifiState.isConnected && wifiState.ssid) {
+            connectivity = wifiState.ssid;
+        }
         const settingsMenuItems = [
             {
-                icon: Icons.user,
-                title: '시스템',
-//                context: ``,
+                icon: Icons.eon,
+                title: '장치',
+                context: ``,
 //                context: isPaired ? '페어링됨' : '페어링안됨',
                 route: SettingsRoutes.ACCOUNT,
             },
             {
-                icon: Icons.eon,
+                icon: Icons.calibration,
                 title: '캘리브레이션',
-//                context: ``,
+                context: ``,
 //                context: `${ parseInt(freeSpace) + '%' }`,
                 route: SettingsRoutes.DEVICE,
             },
             {
-                icon: Icons.network,
+                icon: Icons.addon,
                 title: '추가기능',
 //                context: ``,
-//                context: connectivity,
+                context: connectivity,
                 route: SettingsRoutes.NETWORK,
             },
             {
@@ -234,7 +239,7 @@ class Settings extends Component {
                 title: '개발자',
 //                context: ``,
 //                context: `v${ version.split('-')[0] }`,
-//                context: `v${ version }`,
+                context: `v${ version }`,
                 route: SettingsRoutes.DEVELOPER,
             },
         ];
@@ -260,15 +265,6 @@ class Settings extends Component {
                             style={ Styles.settingsMenuItemTitle }>
                             { item.title }
                         </X.Text>
-
-                    </X.Button>
-                </View>
-            )
-        })
-    }
-
-
-/*
                         <X.Text
                             color='white'
                             size='tiny'
@@ -276,17 +272,16 @@ class Settings extends Component {
                             style={ Styles.settingsMenuItemContext }>
                             { item.context }
                         </X.Text>
+                    </X.Button>
+                </View>
+            )
+        })
+    }
 
-*/
-
-
-// primary menu
     renderPrimarySettings() {
         const {
-            wifiState,
             params: {
                 Passive: isPassive,
-                Version: version,                
                 OpenpilotEnabledToggle: openpilotEnabled,
                 IsMetric: isMetric,
                 CommunityFeaturesToggle: communityFeatures,
@@ -308,10 +303,6 @@ class Settings extends Component {
         } = this.props;
 //        const { expandedCell, speedLimitOffsetInt } = this.state;
         const { expandedCell } = this.state;
-        let connectivity = 'Disconnected'
-        if (wifiState.isConnected && wifiState.ssid) {
-            connectivity = wifiState.ssid;
-        }
         return (
             <View style={ Styles.settings }>
                 <View style={ Styles.settingsHeader }>
@@ -319,7 +310,7 @@ class Settings extends Component {
                         color='ghost'
                         size='small'
                         onPress={ () => this.handlePressedBack() }>
-                        {'<  오픈파일럿 `v${ version }` 설정'}
+                        {'<  오픈파일럿 설정'}
                     </X.Button>
                 </View>
                 <ScrollView
@@ -334,10 +325,6 @@ class Settings extends Component {
                             color='settingsDefault'
                             onPress={ () => ChffrPlus.openWifiSettings() }>
                             wifi 설정
-                        <X.TableCell
-                            title='wifi 연결상태'
-                            value={ connectivity }
-                            valueTextSize='tiny' />                            
                         </X.Button>
                         { !parseInt(isPassive) ? (
                             <X.TableCell
@@ -535,7 +522,7 @@ class Settings extends Component {
                         color='ghost'
                         size='small'
                         onPress={ () => this.handlePressedBack() }>
-                        {'<  시스템 설정'}
+                        {'<  장치 설정'}
                     </X.Button>
                 </View>
                 <ScrollView
@@ -844,13 +831,13 @@ class Settings extends Component {
                             value={ (pandaDongleId != null && pandaDongleId != "unprovisioned") ? pandaDongleId : '연결안됨' }
                             valueTextSize='tiny' />
                         <X.TableCell
-                            title='여유 공간'
+                            title='장치 여유 공간'
                             value={ parseInt(freeSpace) + '%' }
                             valueTextSize='tiny' />
                         <X.TableCell
                             title='APK 버전'
-                            value={ crwusiz - 20210222 }
-                            valueTextSize='tiny' />                            
+                            value={'crwusiz - 20210222'}
+                            valueTextSize='tiny' />
                     </X.Table>
                     <X.Table color='darkBlue' padding='big'>
                         <X.Line color='transparent' size='tiny' spacing='mini' />
@@ -873,9 +860,8 @@ class Settings extends Component {
         )
     }
 
+//`
 /*===========================
-
-
                         <X.TableCell
                             iconSource={ Icons.developer }
                             title='인증된 SSH 키'
