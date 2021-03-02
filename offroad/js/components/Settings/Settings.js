@@ -65,28 +65,13 @@ class Settings extends Component {
                 gitBranch: null,
                 gitCommit: null,
             },
-            speedLimitOffsetInt: '0',
+           // speedLimitOffsetInt: '0',
+          //  lateralControlMethodInt: '0',
             githubUsername: '',
             authKeysUpdateState: null,
         }
         this.writeSshKeys = this.writeSshKeys.bind(this);
         this.toggleExpandGithubInput = this.toggleExpandGithubInput.bind(this);
-    }
-
-    async componentWillMount() {
-        UploadProgressTimer.start(this.props.dispatch);
-        await this.props.refreshParams();
-        const {
-            isMetric,
-            params: {
-                SpeedLimitOffset: speedLimitOffset
-            },
-        } = this.props;
-        if (isMetric) {
-            this.setState({ speedLimitOffsetInt: parseInt(mpsToKph(speedLimitOffset)) })
-        } else {
-            this.setState({ speedLimitOffsetInt: parseInt(mpsToMph(speedLimitOffset)) })
-        }
     }
 
     async componentWillUnmount() {
@@ -148,6 +133,39 @@ class Settings extends Component {
     }
 
 /*===========================
+    async componentWillMount() {
+        UploadProgressTimer.start(this.props.dispatch);
+        await this.props.refreshParams();
+        const {
+            isMetric,
+            params: {
+                SpeedLimitOffset: speedLimitOffset,
+                LateralControlMethod: lateralControlMethod,
+            },
+        } = this.props;
+        if (isMetric) {
+            this.setState({ speedLimitOffsetInt: parseInt(mpsToKph(speedLimitOffset)) })
+        } else {
+            this.setState({ speedLimitOffsetInt: parseInt(mpsToMph(speedLimitOffset)) })
+        }
+        this.setState({ lateralControlMethodInt: lateralControlMethod === '0'? 0 : parseInt(lateralControlMethod) || 0 })
+    }
+
+    handleChangedLateralControlMethod(operator) {
+        const { lateralControlMethodInt } = this.state;
+        let _lateralControlMethod;
+        switch (operator) {
+          case 'increment':
+            _lateralControlMethod = Math.min(2, lateralControlMethodInt + 1);
+                break;
+          case 'decrement':
+            _lateralControlMethod = Math.max(0, lateralControlMethodInt - 1);
+                break;
+        }
+        this.setState({ lateralControlMethodInt: _lateralControlMethod });
+        this.props.setLateralControlMethod(_lateralControlMethod);
+      }
+
      handleChangedSpeedLimitOffset(operator) {
          const { speedLimitOffset, isMetric } = this.props;
          let _speedLimitOffset;
@@ -290,8 +308,6 @@ class Settings extends Component {
                 AutoLaneChangeEnabled: autoLaneChangeEnabled,
                 LongControlEnabled: longControlEnabled,
                 MadModeEnabled: madModeEnabled,
-                DisableLogger: disableLogger,
-                LdwsMfc: ldwsMfc,
                 /*
                 RecordFront: recordFront,
                 IsRHD: isRHD,
@@ -407,28 +423,6 @@ class Settings extends Component {
                                 isExpanded={ expandedCell == 'madMode_enabled' }
                                 handleExpanded={ () => this.handleExpanded('madMode_enabled') }
                                 handleChanged={ this.props.setMadModeEnabled } />
-                        ) : null }
-                        { !parseInt(isPassive) && !!parseInt(communityFeatures) ? (
-                            <X.TableCell
-                            type='switch'
-                            title='Logger 사용안함'
-                            value={ !!parseInt(disableLogger) }
-                            iconSource={ Icons.disablelogger }
-                            description='Logger 관련된 프로세스를 사용안함으로 설정하여 CPU 부하를 줄입니다.'
-                            isExpanded={ expandedCell == 'disableLogger' }
-                            handleExpanded={ () => this.handleExpanded('disableLogger') }
-                            handleChanged={ this.props.setDisableLogger } />
-                        ) : null }
-                        { !parseInt(isPassive) && !!parseInt(communityFeatures) ? (
-                            <X.TableCell
-                            type='switch'
-                            title='LDWS MFC 카메라 사용'
-                            value={ !!parseInt(ldwsMfc) }
-                            iconSource={ Icons.ldwsmfc }
-                            description='LDWS MFC 카메라 장착차량은 이 기능을 사용으로 설정하세요.'
-                            isExpanded={ expandedCell == 'ldwsMfc' }
-                            handleExpanded={ () => this.handleExpanded('ldwsMfc') }
-                            handleChanged={ this.props.setLdwsMfc } />
                         ) : null }
                       </X.Table>
                 </ScrollView>
@@ -616,6 +610,7 @@ class Settings extends Component {
     }
 
     renderDeviceSettings() {
+//        const { expandedCell  , lateralControlMethodInt} = this.state;
         const { expandedCell } = this.state;
         const {
 //            txSpeedKbps,
@@ -624,6 +619,9 @@ class Settings extends Component {
             params: {
                 Passive: isPassive,
                 CalibrationParams: calibrationParams,
+                LateralControlPid: lateralControlPid,
+                LateralControlIndi: lateralControlIndi,
+                LateralControlLqr: lateralControlLqr,
             },
         } = this.props;
         const software = !!parseInt(isPassive) ? '대시캠' : '오픈파일럿';
@@ -657,6 +655,33 @@ class Settings extends Component {
                             </X.Button>
                         </X.TableCell>
                         <X.TableCell
+                            type='switch'
+                            title='PID 조향제어'
+                            value={ !!parseInt(lateralControlPid) }
+                            iconSource={ Icons.addon }
+                            description='PID 조향제어 로직을 사용합니다'
+                            isExpanded={ expandedCell == 'lateralControlPid' }
+                            handleExpanded={ () => this.handleExpanded('lateralControlPid') }
+                            handleChanged={ this.props.setLateralControlPid } />
+                        <X.TableCell
+                            type='switch'
+                            title='INDI 조향제어'
+                            value={ !!parseInt(lateralControlIndi) }
+                            iconSource={ Icons.addon }
+                            description='INDI 조향제어 로직을 사용합니다'
+                            isExpanded={ expandedCell == 'lateralControlIndi' }
+                            handleExpanded={ () => this.handleExpanded('lateralControlIndi') }
+                            handleChanged={ this.props.setLateralControlIndi } />
+                        <X.TableCell
+                            type='switch'
+                            title='LQR 조향제어'
+                            value={ !!parseInt(lateralControlLqr) }
+                            iconSource={ Icons.addon }
+                            description='LQR 조향제어 로직을 '
+                            isExpanded={ expandedCell == 'lateralControlLqr' }
+                            handleExpanded={ () => this.handleExpanded('lateralControlLqr') }
+                            handleChanged={ this.props.setLateralControlLqr } />
+                        <X.TableCell
                             type='custom'
                             title='운전자 모니터링'
                             iconSource={ Icons.monitoring }
@@ -680,6 +705,41 @@ class Settings extends Component {
 
 /*===========================
                         <X.TableCell
+                            type='custom'
+                            title='조향제어 로직'
+                            iconSource={ Icons.addon }
+                            description='조향제어 로직을 변경합니다. PID/INDI/LQR'
+                            isExpanded={ expandedCell == 'lateral_control_method' }
+                            handleExpanded={ () => this.handleExpanded('lateral_control_method') }>
+                            <X.Button
+                                color='ghost'
+                                activeOpacity={ 1 }
+                                style={ Styles.settingsPlusMinus }>
+                                <X.Button
+                                    style={ [Styles.settingsNumericButton, { opacity: lateralControlMethodInt <= 0? 0.1 : 0.8 }] }
+                                    onPress={ () => this.handleChangedLateralControlMethod('decrement')  }>
+                                    <X.Image
+                                        source={ Icons.minus }
+                                        style={ Styles.settingsNumericIcon } />
+                                </X.Button>
+                                <X.Text
+                                    color='white'
+                                    size='small'
+                                    weight='semibold'
+                                    style={ Styles.settingsNumericValue }>
+                                    { lateralControlMethodInt === 0? 'PID' : lateralControlMethodInt === 1? 'INDI' : 'LQR' }
+                                </X.Text>
+                                <X.Button
+                                    style={ [Styles.settingsNumericButton, { opacity: lateralControlMethodInt >= 2? 0.1 : 0.8 }] }
+                                    onPress={ () => this.handleChangedLateralControlMethod('increment') }>
+                                    <X.Image
+                                        source={ Icons.plus }
+                                        style={ Styles.settingsNumericIcon } />
+                                </X.Button>
+                            </X.Button>
+                        </X.TableCell>
+
+                        <X.TableCell
                             title='업로드 속도'
                             value={ txSpeedKbps + ' kbps' } />
 ===========================*/
@@ -690,6 +750,7 @@ class Settings extends Component {
             params: {
                 Passive: isPassive,
                 PutPrebuilt: putPrebuilt,
+                LdwsMfc: ldwsMfc,
             },
         } = this.props;
         return (
@@ -705,24 +766,7 @@ class Settings extends Component {
                 <ScrollView
                     ref="settingsScrollView"
                     style={ Styles.settingsWindow }>
-                    <X.Table spacing='big' color='darkBlue'>
-                        <X.TableCell
-                            type='switch'
-                            title='prebuilt 파일 생성'
-                            value={ !!parseInt(putPrebuilt) }
-                            iconSource={ Icons.prebuilt }
-                            description='prebuilt 파일을 생성하여 부팅속도를 향상시켜줍니다.'
-                            isExpanded={ expandedCell == 'putPrebuilt' }
-                            handleExpanded={ () => this.handleExpanded('putPrebuilt') }
-                            handleChanged={ this.props.setPutPrebuilt } />
-                        <X.Line color='transparent' size='tiny' spacing='mini' />
-                        <X.Button
-                            size='small'
-                            color='settingsDefault'
-                            onPress={ this.handlePressedUpdatePandaFirmware  }>
-                            판다 펌웨어 플래싱
-                        </X.Button>
-                        <X.Line color='transparent' size='tiny' spacing='mini' />
+                    <X.Table color='darkBlue'>
                         <X.Button
                             size='small'
                             color='settingsDefault'
@@ -736,6 +780,24 @@ class Settings extends Component {
                             onPress={ this.handlePressedUpdateAddFunc  }>
                             추가기능 적용
                         </X.Button>
+                        <X.TableCell
+                            type='switch'
+                            title='prebuilt 파일 생성'
+                            value={ !!parseInt(putPrebuilt) }
+                            iconSource={ Icons.prebuilt }
+                            description='prebuilt 파일을 생성하여 부팅속도를 향상시켜줍니다.'
+                            isExpanded={ expandedCell == 'putPrebuilt' }
+                            handleExpanded={ () => this.handleExpanded('putPrebuilt') }
+                            handleChanged={ this.props.setPutPrebuilt } />
+                        <X.TableCell
+                            type='switch'
+                            title='LDWS MFC 카메라 사용'
+                            value={ !!parseInt(ldwsMfc) }
+                            iconSource={ Icons.ldwsmfc }
+                            description='LDWS MFC 카메라 장착차량은 이 기능을 사용으로 설정하세요.'
+                            isExpanded={ expandedCell == 'ldwsMfc' }
+                            handleExpanded={ () => this.handleExpanded('ldwsMfc') }
+                            handleChanged={ this.props.setLdwsMfc } />
                     </X.Table>
                 </ScrollView>
             </View>
@@ -790,7 +852,7 @@ class Settings extends Component {
                 <ScrollView
                     ref="settingsScrollView"
                     style={ Styles.settingsWindow }>
-                    <X.Table spacing='big' color='darkBlue'>
+                    <X.Table color='darkBlue'>
                         <X.TableCell
                             type='switch'
                             title='SSH 접속 사용'
@@ -836,10 +898,17 @@ class Settings extends Component {
                             valueTextSize='tiny' />
                         <X.TableCell
                             title='APK 버전'
-                            value={'crwusiz - 20210222'}
+                            value={'crwusiz - 20210303'}
                             valueTextSize='tiny' />
                     </X.Table>
                     <X.Table color='darkBlue' padding='big'>
+                        <X.Line color='transparent' size='tiny' spacing='mini' />
+                        <X.Button
+                            size='small'
+                            color='settingsDefault'
+                            onPress={ this.handlePressedUpdatePandaFirmware  }>
+                            판다 펌웨어 플래싱
+                        </X.Button>
                         <X.Line color='transparent' size='tiny' spacing='mini' />
                         <X.Button
                             size='small'
@@ -1100,15 +1169,36 @@ const mapDispatchToProps = dispatch => ({
 //          dispatch(updateParam(Params.KEY_LONG_CONTROL_ENABLED, (0).toString()));
         }
     },
+    setLateralControlPid: (lateralControlPid) => {
+        dispatch(updateParam(Params.KEY_LATERAL_CONTROL_PID, (lateralControlPid | 0).toString()));
+        if (lateralControlPid == 1) {
+            dispatch(deleteParam(Params.KEY_LATERAL_CONTROL_INDI));
+            dispatch(deleteParam(Params.KEY_LATERAL_CONTROL_LQR));
+        }
+    },
+    setLateralControlIndi: (lateralControlIndi) => {
+        dispatch(updateParam(Params.KEY_LATERAL_CONTROL_INDI, (lateralControlIndi | 0).toString()));
+        if (lateralControlIndi == 1) {
+            dispatch(deleteParam(Params.KEY_LATERAL_CONTROL_PID));
+            dispatch(deleteParam(Params.KEY_LATERAL_CONTROL_LQR));
+        }
+    },
+    setLateralControlLqr: (lateralControlLqr) => {
+        dispatch(updateParam(Params.KEY_LATERAL_CONTROL_LQR, (lateralControlLqr | 0).toString()));
+        if (lateralControlLqr == 1) {
+            dispatch(deleteParam(Params.KEY_LATERAL_CONTROL_PID));
+            dispatch(deleteParam(Params.KEY_LATERAL_CONTROL_INDI));
+        }
+    },
     setLdwsMfc: (ldwsMfc) => {
         dispatch(updateParam(Params.KEY_LDWS_MFC, (ldwsMfc | 0).toString()));
     },
     setPutPrebuilt: (putPrebuilt) => {
         dispatch(updateParam(Params.KEY_PUT_PREBUILT, (putPrebuilt | 0).toString()));
     },
-    setDisableLogger: (disableLogger) => {
-        dispatch(updateParam(Params.KEY_DISABLE_LOGGER, (disableLogger | 0).toString()));
-    },
+//    setLateralControlMethod: (val) => {
+//        dispatch(updateParam(Params.KEY_LATERAL_CONTROL_METHOD, (val | 0).toString()));
+//    },
     deleteParam: (param) => {
         dispatch(deleteParam(param));
     },
