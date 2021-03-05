@@ -44,6 +44,7 @@ export const Params = {
     KEY_AUTO_LANE_CHANGE_ENABLED: 'AutoLaneChangeEnabled',
     KEY_PUT_PREBUILT: 'PutPrebuilt',
     KEY_LDWS_MFC: 'LdwsMfc',
+    KEY_DISABLE_LOGGER: 'DisableLogger',    
     KEY_LATERAL_CONTROL_PID: 'LateralControlPid',
     KEY_LATERAL_CONTROL_INDI: 'LateralControlIndi',
     KEY_LATERAL_CONTROL_LQR: 'LateralControlLqr',

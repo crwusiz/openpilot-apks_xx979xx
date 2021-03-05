@@ -47,6 +47,9 @@ const Icons = {
     ldwsmfc: require('../../img/icon_ldwsmfc.png'),
     disablelogger: require('../../img/icon_disablelogger.png'),
     addon: require('../../img/icon_addon.png'),
+    pid: require('../../img/icon_pid.png'),
+    indi: require('../../img/icon_indi.png'),
+    lqr: require('../../img/icon_lqr.png'),
 }
 
 class Settings extends Component {
@@ -658,7 +661,7 @@ class Settings extends Component {
                             type='switch'
                             title='PID 조향제어'
                             value={ !!parseInt(lateralControlPid) }
-                            iconSource={ Icons.addon }
+                            iconSource={ Icons.pid }
                             description='PID 조향제어 로직을 사용합니다'
                             isExpanded={ expandedCell == 'lateralControlPid' }
                             handleExpanded={ () => this.handleExpanded('lateralControlPid') }
@@ -667,7 +670,7 @@ class Settings extends Component {
                             type='switch'
                             title='INDI 조향제어'
                             value={ !!parseInt(lateralControlIndi) }
-                            iconSource={ Icons.addon }
+                            iconSource={ Icons.indi }
                             description='INDI 조향제어 로직을 사용합니다'
                             isExpanded={ expandedCell == 'lateralControlIndi' }
                             handleExpanded={ () => this.handleExpanded('lateralControlIndi') }
@@ -676,8 +679,8 @@ class Settings extends Component {
                             type='switch'
                             title='LQR 조향제어'
                             value={ !!parseInt(lateralControlLqr) }
-                            iconSource={ Icons.addon }
-                            description='LQR 조향제어 로직을 '
+                            iconSource={ Icons.lqr }
+                            description='LQR 조향제어 로직을 사용합니다'
                             isExpanded={ expandedCell == 'lateralControlLqr' }
                             handleExpanded={ () => this.handleExpanded('lateralControlLqr') }
                             handleChanged={ this.props.setLateralControlLqr } />
@@ -751,6 +754,7 @@ class Settings extends Component {
                 Passive: isPassive,
                 PutPrebuilt: putPrebuilt,
                 LdwsMfc: ldwsMfc,
+                DisableLogger: disableLogger,
             },
         } = this.props;
         return (
@@ -798,6 +802,15 @@ class Settings extends Component {
                             isExpanded={ expandedCell == 'ldwsMfc' }
                             handleExpanded={ () => this.handleExpanded('ldwsMfc') }
                             handleChanged={ this.props.setLdwsMfc } />
+                        <X.TableCell
+                            type='switch'
+                            title='Logger 사용안함'
+                            value={ !!parseInt(disableLogger) }
+                            iconSource={ Icons.disablelogger }
+                            description='Logger 관련된 프로세스를 사용안함으로 설정하여 CPU 부하를 줄입니다.'
+                            isExpanded={ expandedCell == 'disableLogger' }
+                            handleExpanded={ () => this.handleExpanded('disableLogger') }
+                            handleChanged={ this.props.setDisableLogger } />
                     </X.Table>
                 </ScrollView>
             </View>
@@ -1190,11 +1203,14 @@ const mapDispatchToProps = dispatch => ({
             dispatch(deleteParam(Params.KEY_LATERAL_CONTROL_INDI));
         }
     },
+    setPutPrebuilt: (putPrebuilt) => {
+        dispatch(updateParam(Params.KEY_PUT_PREBUILT, (putPrebuilt | 0).toString()));
+    },    
     setLdwsMfc: (ldwsMfc) => {
         dispatch(updateParam(Params.KEY_LDWS_MFC, (ldwsMfc | 0).toString()));
     },
-    setPutPrebuilt: (putPrebuilt) => {
-        dispatch(updateParam(Params.KEY_PUT_PREBUILT, (putPrebuilt | 0).toString()));
+    setDisableLogger: (disableLogger) => {
+        dispatch(updateParam(Params.KEY_DISABLE_LOGGER, (disableLogger | 0).toString()));
     },
 //    setLateralControlMethod: (val) => {
 //        dispatch(updateParam(Params.KEY_LATERAL_CONTROL_METHOD, (val | 0).toString()));

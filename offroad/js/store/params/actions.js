@@ -50,6 +50,7 @@ const PARAMS = [
   "IsRHD",
   "PutPrebuilt",
   "LdwsMfc",
+  "DisableLogger",  
   "LateralControlPid",
   "LateralControlIndi",
   "LateralControlLqr",
