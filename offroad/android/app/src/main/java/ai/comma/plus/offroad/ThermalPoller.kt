@@ -21,18 +21,15 @@ data class ThermalSample(
 ) {
     fun toWritableMap(): WritableMap {
         val map = WritableNativeMap()
-        map.putInt("freeSpace", (freeSpace*100).toInt())
-//        map.putInt("freeSpace", freeSpace.toInt())
+        map.putInt("freeSpace", freeSpace.toInt())
         map.putBoolean("started", started)
         return map
     }
 
     companion object {
-        fun readFromThermalEvent(reader: Log.ThermalData.Reader): ThermalSample {
-//        fun readFromThermalEvent(reader: Log.DeviceState.Reader): ThermalSample {
+        fun readFromThermalEvent(reader: Log.DeviceState.Reader): ThermalSample {
             return ThermalSample(
-                    reader.freeSpace,
-//                    reader.freeSpacePercent,
+                    reader.freeSpacePercent,
                     reader.started
             )
         }
@@ -77,8 +74,7 @@ class ThermalPoller(val delegate: ThermalPollerDelegate) {
             }
 
             val log = reader.getRoot(Log.Event.factory)
-            val thermalEvent = log.thermal
-//            val thermalEvent = log.deviceState
+            val thermalEvent = log.deviceState
             try {
                 val thermal = ThermalSample.readFromThermalEvent(thermalEvent)
                 if (thermal != lastThermal) {
@@ -96,8 +92,7 @@ class ThermalPoller(val delegate: ThermalPollerDelegate) {
 
     fun start() {
         running = true
-        thermalSock = msgqCtx.subSocket("thermal")
-//        thermalSock = msgqCtx.subSocket("deviceState")
+        thermalSock = msgqCtx.subSocket("deviceState")
         thermalSock!!.setTimeout(5000)
         thermalThreadHandle.start()
     }

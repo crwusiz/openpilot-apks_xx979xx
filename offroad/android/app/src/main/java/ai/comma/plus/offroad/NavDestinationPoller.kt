@@ -3,7 +3,7 @@ package ai.comma.plus.offroad
 import ai.comma.messaging.Context
 import ai.comma.messaging.SubSocket
 import ai.comma.openpilot.cereal.Log
-//import ai.comma.openpilot.cereal.Legacy
+import ai.comma.openpilot.cereal.Legacy
 import com.facebook.react.bridge.WritableMap
 import com.facebook.react.bridge.WritableNativeArray
 import com.facebook.react.bridge.WritableNativeMap
@@ -43,8 +43,7 @@ data class Destination(
     }
 
     companion object {
-        fun readFromAddress(reader: Log.NavStatus.Address.Reader): Destination {            
-//        fun readFromAddress(reader: Legacy.NavStatus.Address.Reader): Destination {
+        fun readFromAddress(reader: Legacy.NavStatus.Address.Reader): Destination {
             return Destination(
                     reader.title.toString(),
                     reader.lat,
@@ -98,11 +97,9 @@ class NavDestinationPoller(val delegate: NavDestinationPollerDelegate) {
             }
 
             val log = reader.getRoot(Log.Event.factory)
-            assert(log.isNavStatus)
-//            assert(log.isNavStatusDEPRECATED)
+            assert(log.isNavStatusDEPRECATED)
 
-            val address = log.navStatus.currentAddress
-//            val address = log.navStatusDEPRECATED.currentAddress
+            val address = log.navStatusDEPRECATED.currentAddress
             try {
                 val destination = Destination.readFromAddress(address)
                 if (destination != lastDestination) {
@@ -118,8 +115,7 @@ class NavDestinationPoller(val delegate: NavDestinationPollerDelegate) {
 
     fun start() {
         running = true
-        navStatusSock = msgqCtx.subSocket("navStatus")
-//        navStatusSock = msgqCtx.subSocket("navStatusDEPRECATED")
+        navStatusSock = msgqCtx.subSocket("navStatusDEPRECATED")
         navStatusThreadHandle.start()
     }
 
